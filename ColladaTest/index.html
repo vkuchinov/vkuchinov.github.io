@@ -1,222 +1,200 @@
 <html>
-	<head>
-		<title>ColladaLoader: Applying texture to certain object or a group</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<head>
+<title>ColladaLoader: Applying texture to certain object or a group</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<style>
+</style>
+</head>
+<body style="background-color:#DEDEDE;">
 
-	<style>
-	</style>
-	</head>
-	<body style="background-color:#DEDEDE;">
-        
-		<script src="js/three.min.js"></script>
-		<script src="js/Animation.js"></script>
-		<script src="js/AnimationHandler.js"></script>
-		<script src="js/KeyFrameAnimation.js"></script>
-        <script src="js/ColladaLoader.js"></script>
-        <script src="js/Detector.js"></script>
-		<script src="js/stats.min.js"></script>
+<script src="js/three.min.js"></script>
+<script src="js/Animation.js"></script>
+<script src="js/AnimationHandler.js"></script>
+<script src="js/KeyFrameAnimation.js"></script>
+<script src="js/ColladaLoader.js"></script>
+<script src="js/Detector.js"></script>
+<script src="js/stats.min.js"></script>
 
-		<script>
+    <script>
 
-			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+    if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-			var container, stats;
+    var container, stats;
+    var camera, scene, renderer, objects;
+    var particleLight;
+    var interface, uv, mockups, line;
 
-			var camera, scene, renderer, objects;
-			var particleLight;
-			var interface, uv, mockups, line;
-			
-			var texture; var id; var images; var setMaterial;
-			
+    var texture; var id; var images; var setMaterial;
 
-			var loader = new THREE.ColladaLoader();
-			loader.options.convertUpAxis = true;
-			loader.load( 'repository/model.dae', function ( collada ) {
+    var loader = new THREE.ColladaLoader();
+    loader.options.convertUpAxis = true;
+    loader.load( 'repository/model.dae', function ( collada ) {
 
-            interface = collada.scene;
+        interface = collada.scene;
 
-            interface.scale.x = interface.scale.y = interface.scale.z = 0.033;
-            interface.updateMatrix();
+        interface.scale.x = interface.scale.y = interface.scale.z = 0.033;
+        interface.updateMatrix();
 
-            init();
-		    animate();
-                
-			} );
-            
-			function init() {
+        init();
+        animate();
 
-				container = document.createElement( 'div' );
-				container.id = 'scene';
-				
-				
-				document.body.appendChild( container );
-				document.getElementById("scene").addEventListener("mousemove", getOverPosition, false);
+    } );
 
-				camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.set( 2, 2, 4 );
+    function init() {
 
-				scene = new THREE.Scene();
+    container = document.createElement( 'div' );
+    container.id = 'scene';
 
-				// Grid
 
-				var size = 4, step = 0.5;
+    document.body.appendChild( container );
+    document.getElementById("scene").addEventListener("mousemove", getOverPosition, false);
 
-				var geometry = new THREE.Geometry();
-				var material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+    camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 2000 );
+    camera.position.set( 2, 2, 4 );
 
-				for ( var i = - size; i <= size; i += step ) {
+    scene = new THREE.Scene();
 
-					geometry.vertices.push( new THREE.Vector3( - size, - 0.04, i ) );
-					geometry.vertices.push( new THREE.Vector3(   size, - 0.04, i ) );
+    //grid
 
-					geometry.vertices.push( new THREE.Vector3( i, - 0.04, - size ) );
-					geometry.vertices.push( new THREE.Vector3( i, - 0.04,   size ) );
+    var size = 4, step = 0.5;
 
-				}
+    var geometry = new THREE.Geometry();
+    var material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 
-				line = new THREE.LineSegments( geometry, material );
-				scene.add( line );
-		
-				scene.add( interface );
- 
+    for ( var i = - size; i <= size; i += step ) {
 
-                particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) );
-                scene.add( particleLight );
+        geometry.vertices.push( new THREE.Vector3( - size, - 0.04, i ) );
+        geometry.vertices.push( new THREE.Vector3(   size, - 0.04, i ) );
+        geometry.vertices.push( new THREE.Vector3( i, - 0.04, - size ) );
+        geometry.vertices.push( new THREE.Vector3( i, - 0.04,   size ) );
 
-				scene.add( new THREE.AmbientLight( 0x999999 ) );
+    }
 
-                var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xaadede*/0xeeeeee );
-                directionalLight.position.x = Math.random() - 0.5;
-                directionalLight.position.y = Math.random() - 0.5;
-                directionalLight.position.z = Math.random() - 0.5;
-                directionalLight.position.normalize();
-                scene.add( directionalLight );
+    line = new THREE.LineSegments( geometry, material );
+    scene.add( line );
 
-				renderer = new THREE.WebGLRenderer({ antialias: 6 });
-                renderer.setClearColor( 0xDEDEDE, 1);
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight, true );
-				container.appendChild( renderer.domElement );
-				
-				setMaterial = function(node, material) {
-                node.material = material;
-                if (node.children) {
-                for (var i = 0; i < node.children.length; i++) {
+    scene.add( interface );
+
+    particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) );
+    scene.add( particleLight );
+
+    scene.add( new THREE.AmbientLight( 0x999999 ) );
+
+    var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xaadede*/0xeeeeee );
+    directionalLight.position.x = Math.random() - 0.5;
+    directionalLight.position.y = Math.random() - 0.5;
+    directionalLight.position.z = Math.random() - 0.5;
+    directionalLight.position.normalize();
+    scene.add( directionalLight );
+
+    renderer = new THREE.WebGLRenderer({ antialias: 6 });
+    renderer.setClearColor( 0xDEDEDE, 1);
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight, true );
+    container.appendChild( renderer.domElement );
+
+    setMaterial = function(node, material) {
+        node.material = material;
+        if (node.children) {
+            for (var i = 0; i < node.children.length; i++) {
                 setMaterial(node.children[i], material);
-					}
-				  }
-				}
-                
-                
-                    var urls = [
-                  'repository/canary/pos-x.png',
-                  'repository/canary/neg-x.png',
-                  'repository/canary/pos-y.png',
-                  'repository/canary/neg-y.png',
-                  'repository/canary/pos-z.png',
-                  'repository/canary/neg-z.png'
-                ];
-                
-                 var cubeLoader = new THREE.CubeTextureLoader();
-                 cubeLoader.setCrossOrigin( 'anonymous' );
-                
-                var cubemap = cubeLoader.load( urls );
-                cubemap.format = THREE.RGBFormat;
-        
-                var reflectionMaterial = new THREE.MeshBasicMaterial({
-          color: 0xcccccc, transparent: true, opacity: 0.15,
-          envMap: cubemap
-        });
-                
-                
-                setMaterial(interface.getObjectByName( 'duo', true ), reflectionMaterial);
-                
-				//images = [ 'banners/0001.jpg', 'banners/0002.jpg', 'banners/0003.jpg', 'banners/0004.jpg', 'banners/0005.jpg' ]; 
-				//var texture = new THREE.MeshBasicMaterial({color: 0xff0000});
+            }
+        }
+    }
+
+    var urls = ['repository/canary/pos-x.png',
+                'repository/canary/neg-x.png',
+                'repository/canary/pos-y.png',
+                'repository/canary/neg-y.png',
+                'repository/canary/pos-z.png',
+                'repository/canary/neg-z.png' ];
+
+    var cubemap = THREE.ImageUtils.loadTextureCube(urls);
+    cubemap.format = THREE.RGBFormat;
+
+    var reflectionMaterial = new THREE.MeshBasicMaterial({
+    color: 0xcccccc, transparent: true, opacity: 0.15,
+    envMap: cubemap
+    });
 
 
-				window.addEventListener( 'resize', onWindowResize, false );
-				
-				var text2 = document.createElement('div');
-				text2.style.position = 'absolute';
-				text2.style.width = 512;
-				text2.style.height = 32;
-				text2.style.backgroundColor = "none";
-				text2.style.color = "white";
-				text2.style.fontFamily = "Tahoma";
-				text2.style.fontSize = "12px";
-				text2.innerHTML = "Example by Vladimir V. KUCHINOV<br><i>helloworld@vkuchinov.co.uk</i>";
-				text2.style.top = 32 + 'px';
-				text2.style.left = 32 + 'px';
-				document.body.appendChild(text2);
+    setMaterial(interface.getChildByName( 'duo', true ), reflectionMaterial);
 
-	
+    window.addEventListener( 'resize', onWindowResize, false );
 
-			//document.onkeydown = checkKeycode;
+    var text2 = document.createElement('div');
+    text2.style.position = 'absolute';
+    text2.style.width = 512;
+    text2.style.height = 32;
+    text2.style.backgroundColor = "none";
+    text2.style.color = "white";
+    text2.style.fontFamily = "Tahoma";
+    text2.style.fontSize = "12px";
+    text2.innerHTML = "You can use <b>LEFT</b> & <b>RIGHT</b> keys to switch trifolds.<br><i>Layout and 3D models are made by Vladimir V. KUCHINOV.</i>";
+    text2.style.top = 32 + 'px';
+    text2.style.left = 32 + 'px';
+    document.body.appendChild(text2);
 
-			}
+    }
 
-			function onWindowResize() {
+    function onWindowResize() {
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( window.innerWidth, window.innerHeight );
 
-			}
+    }
 
-			function animate() {
+    function animate() {
 
-				requestAnimationFrame( animate );
+    requestAnimationFrame( animate );
 
-				render();
-				//stats.update();
+    render();
 
-			}
+    }
 
-			var clock = new THREE.Clock();
+    var clock = new THREE.Clock();
 
-			function getOverPosition(e) {
-			
-			var dist = Math.sqrt(Math.pow(window.innerWidth/2 - (e.pageX - document.getElementById("scene").offsetLeft), 2) + Math.pow(window.innerHeight/2 - (e.pageY - document.getElementById("scene").offsetTop), 2));
-		    
-		
-		    var focus = 18 + (dist - 0) / (window.innerWidth/2 - 0) * (50 - 18);
-	
-			camera.fov = focus;
-			camera.updateProjectionMatrix();
-			
-			}
+    function getOverPosition(e) {
+
+    var dist = Math.sqrt(Math.pow(window.innerWidth/2 - (e.pageX - document.getElementById("scene").offsetLeft), 2) + Math.pow(window.innerHeight/2 - (e.pageY - document.getElementById("scene").offsetTop), 2));
+
+    var focus = 18 + (dist - 0) / (window.innerWidth/2 - 0) * (50 - 18);
+
+    camera.fov = focus;
+    camera.updateProjectionMatrix();
+
+    }
 
 
-			function render() {
-	
+    function render() {
 
-				var timer = Date.now() * 0.0005;
+    var timer = Date.now() * 0.0005;
 
-				camera.position.x = -2 + Math.cos( timer ) * 10;
-				camera.position.y = 5;
-				camera.position.z = -0.25 + Math.sin( timer ) * 10;
-				
-				interface.position.z = 0.175;
-				
-			    interface.position.y = -3;
-				line.position.y = -3;
-				
-				scene.position.y = -2;
-				camera.lookAt( scene.position );
+    camera.position.x = -2 + Math.cos( timer ) * 10;
+    camera.position.y = 5;
+    camera.position.z = -0.25 + Math.sin( timer ) * 10;
 
-                particleLight.position.x = Math.sin( timer * 4 ) * 3009;
-                particleLight.position.y = Math.cos( timer * 5 ) * 4000;
-                particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+    interface.position.z = 0.175;
 
-				THREE.AnimationHandler.update( clock.getDelta() );
+    interface.position.y = -3;
+    line.position.y = -3;
 
-				renderer.render( scene, camera );
+    scene.position.y = -2;
+    camera.lookAt( scene.position );
 
-			}
+    particleLight.position.x = Math.sin( timer * 4 ) * 3009;
+    particleLight.position.y = Math.cos( timer * 5 ) * 4000;
+    particleLight.position.z = Math.cos( timer * 4 ) * 3009;
 
-		</script>
-	</body>
+    THREE.AnimationHandler.update( clock.getDelta() );
+
+    renderer.render( scene, camera );
+
+    }
+
+    </script>
+</body>
 </html>
