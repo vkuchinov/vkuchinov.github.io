@@ -102,7 +102,6 @@
 				setMaterial = function(node, material) {
                 node.material = material;
                 if (node.children) {
-                console.log(node.children.length);
                 for (var i = 0; i < node.children.length; i++) {
                 setMaterial(node.children[i], material);
 					}
