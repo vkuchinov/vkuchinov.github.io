@@ -118,7 +118,10 @@
                   'repository/canary/neg-z.png'
                 ];
                 
-                var cubemap = THREE.ImageUtils.loadTextureCube(urls);
+                 var cubeLoader = new THREE.CubeTextureLoader();
+                 cubeLoader.setCrossOrigin( 'anonymous' );
+                
+                var cubemap = cubeLoader.load( urls );
                 cubemap.format = THREE.RGBFormat;
         
                 var reflectionMaterial = new THREE.MeshBasicMaterial({
