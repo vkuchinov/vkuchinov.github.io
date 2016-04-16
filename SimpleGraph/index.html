@@ -1,0 +1,278 @@
+<html>
+<head>
+<title>Simple Graph [Bar] Flowing on a Sine</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<style>
+</style>
+</head>
+<body style="background-color:#DEDEDE;">
+
+<script src="js/three.min.js"></script>
+<script src="js/Detector.js"></script>
+<script src="js/stats.min.js"></script>
+
+    <script>
+        
+    //REFERENCES:
+    //http://jsfiddle.net/Eskel/g593q/5/
+        
+
+    if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+    var container, stats;
+    var camera, scene, renderer, objects;
+    var particleLight;
+    var interface, uv, mockups, line;
+    var cube, wave;
+        
+    var segments = 20;
+    //length of segments + 1
+ 
+    function sine(size_){
+        
+        this.period = 20.0;
+        this.amplitude = 0.5;
+        this.storedY = [];
+        this.values = [];
+        this.size = size_;
+        
+        for(var v = 0; v < this.size + 1; v++){
+         
+            this.values.push(this.amplitude * Math.sin(this.period + (360.0/(this.size + 1) * v * Math.PI / 180.0)));
+        }
+        
+    }
+    
+    sine.prototype.storeY = function(value_) { this.storedY.push(value_); };
+    sine.prototype.getY = function(id_) { return this.storedY[id_]; };
+    sine.prototype.getValue = function(id_) { return this.values[id_]; };
+    sine.prototype.pushPeriod = function(value_) { this.period += value_; 
+            this.values = [];
+            for(var v = 0; v < this.size + 1; v++){
+            this.values.push(this.amplitude * Math.sin(this.period + (360.0/(this.size + 1) * v * Math.PI / 180.0)));
+ 
+        }                      
+    };
+        
+    init();
+    animate();
+
+    function init() {
+
+    
+    wave = new sine(segments);
+        
+    container = document.createElement( 'div' );
+    container.id = 'scene';
+
+
+    document.body.appendChild( container );
+    document.getElementById("scene").addEventListener("mousemove", getOverPosition, false);
+
+    camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 2000 );
+    camera.position.set( 2, 2, 4 );
+
+    scene = new THREE.Scene();
+
+    //box
+    //widthSegments — # of segmented faces along the width of the sides. Default is 1.
+    //heightSegments — # of segmented faces along the height of the sides. Default is 1.
+    //depthSegments
+    
+    var geometry = new THREE.BoxGeometry( 10, 0.5, 1, segments, 1, 1 );
+        
+    THREE.BoxGeometry.prototype.storeY = function(){
+        
+        this.storedY = [];
+        
+        for(var v = 0; v < this.vertices.length; v++){
+            this.storedY.push(this.vertices[v].y);  
+        }
+        
+    }
+    
+    THREE.BoxGeometry.prototype.getY = function(id_){
+     
+            return this.storedY[id_];  
+        }
+        
+
+    geometry.storeY();
+      
+    for(var v = 0; v < geometry.vertices.length; v++){ wave.storeY(geometry.vertices[v].y); }
+    
+    //begin
+    for(var v = 0; v < 4; v+= 1){
+    geometry.vertices[v].y = wave.getY(v) + wave.getValue(0);
+    }
+    
+    //middles
+    //for 4 segments    for 6 segments      for n segments
+    //10, 13, 16, 19    12, 17, 22, 27      v, v + n, v + n * 2, v + n * 3
+    //9 , 12, 15, 18    ...
+    //8 , 11, 14, 17    8, 13, 18, 23       
+
+        
+    var n = segments - 1;
+    var count = 1;
+    for(var v = n + 7; v > 7; v--){
+     
+        geometry.vertices[v].y = wave.getY(v) + wave.getValue(count);
+        geometry.vertices[v + n].y = wave.getY(v + n) + wave.getValue(count);
+        geometry.vertices[v + n*2].y = wave.getY(v + n*2) + wave.getValue(count);
+        geometry.vertices[v + n*3].y = wave.getY(v + n*3) + wave.getValue(count);
+        
+        count++;
+    }
+        
+    //end
+    for(var v = 4; v < 8; v+= 1){
+    geometry.vertices[v].y = wave.getY(v) + wave.getValue(segments);   
+    }
+    
+
+    var material = new THREE.MeshBasicMaterial( {color: 0xFF9800} );
+    cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );    
+        
+    cube.geometry.verticesNeedUpdate = true;
+    var size = 4, step = 0.5;
+
+    var geometry = new THREE.Geometry();
+    var material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+
+    for ( var i = - size; i <= size; i += step ) {
+
+        geometry.vertices.push( new THREE.Vector3( - size, - 0.04, i ) );
+        geometry.vertices.push( new THREE.Vector3(   size, - 0.04, i ) );
+        geometry.vertices.push( new THREE.Vector3( i, - 0.04, - size ) );
+        geometry.vertices.push( new THREE.Vector3( i, - 0.04,   size ) );
+
+    }
+
+    line = new THREE.LineSegments( geometry, material );
+    scene.add( line );
+
+    scene.add( interface );
+
+    particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) );
+    scene.add( particleLight );
+
+    scene.add( new THREE.AmbientLight( 0x999999 ) );
+
+    var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xaadede*/0xeeeeee );
+    directionalLight.position.x = Math.random() - 0.5;
+    directionalLight.position.y = Math.random() - 0.5;
+    directionalLight.position.z = Math.random() - 0.5;
+    directionalLight.position.normalize();
+    scene.add( directionalLight );
+
+    renderer = new THREE.WebGLRenderer({ antialias: 6 });
+    renderer.setClearColor( 0xDEDEDE, 1);
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight, true );
+    container.appendChild( renderer.domElement );
+
+    setMaterial = function(node, material) {
+        node.material = material;
+        if (node.children) {
+            for (var i = 0; i < node.children.length; i++) {
+                setMaterial(node.children[i], material);
+            }
+        }
+    }
+
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+    }
+
+    function onWindowResize() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    }
+
+    function animate() {
+
+    requestAnimationFrame( animate );
+    wave.pushPeriod(0.1);
+     //begin
+    for(var v = 0; v < 4; v+= 1){
+    cube.geometry.vertices[v].y =cube.geometry.getY(v) + wave.getValue(0);
+    }
+    
+    //middles
+    //for 4 segments    for 6 segments      for n segments
+    //10, 13, 16, 19    12, 17, 22, 27      v, v + n, v + n * 2, v + n * 3
+    //9 , 12, 15, 18    ...
+    //8 , 11, 14, 17    8, 13, 18, 23       
+
+        
+    var n = segments - 1;
+    var count = 1;
+    for(var v = n + 7; v > 7; v--){
+     
+        cube.geometry.vertices[v].y = cube.geometry.getY(v) + wave.getValue(count);
+        cube.geometry.vertices[v + n].y =cube.geometry.getY(v + n) + wave.getValue(count);
+        cube.geometry.vertices[v + n*2].y = cube.geometry.getY(v + n*2) + wave.getValue(count);
+        cube.geometry.vertices[v + n*3].y = cube.geometry.getY(v + n*3) + wave.getValue(count);
+        
+        count++;
+    }
+        
+    //end
+    for(var v = 4; v < 8; v+= 1){
+    cube.geometry.vertices[v].y = cube.geometry.getY(v) + wave.getValue(segments);   
+    }
+    
+    cube.geometry.verticesNeedUpdate = true;
+
+    render();
+
+    }
+
+    var clock = new THREE.Clock();
+
+    function getOverPosition(e) {
+
+    var dist = Math.sqrt(Math.pow(window.innerWidth/2 - (e.pageX - document.getElementById("scene").offsetLeft), 2) + Math.pow(window.innerHeight/2 - (e.pageY - document.getElementById("scene").offsetTop), 2));
+
+    var focus = 18 + (dist - 0) / (window.innerWidth/2 - 0) * (50 - 18);
+
+    camera.fov = focus;
+    camera.updateProjectionMatrix();
+
+    }
+
+
+    function render() {
+
+    var timer = Date.now() * 0.0005;
+
+    camera.position.x = -2 + Math.cos( timer ) * 10;
+    camera.position.y = 5;
+    camera.position.z = -0.25 + Math.sin( timer ) * 10;
+
+    line.position.y = -3;
+
+    scene.position.y = -2;
+    camera.lookAt( scene.position );
+
+    particleLight.position.x = Math.sin( timer * 4 ) * 3009;
+    particleLight.position.y = Math.cos( timer * 5 ) * 4000;
+    particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+
+    //THREE.AnimationHandler.update( clock.getDelta() );
+
+    renderer.render( scene, camera );
+
+    }
+
+    </script>
+</body>
+</html>
