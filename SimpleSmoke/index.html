@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Simple Smoke</title>
+		
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+		</style>
+       	
+		<script src="js/three.min.js"></script>
+        <script src="js/DDSLoader.js"></script>
+		<script src="js/MTLLoader.js"></script>
+		<script src="js/OBJLoader.js"></script>
+        <script src="js/Detector.js"></script>
+		<script src="js/stats.min.js"></script>
+        <script src="js/ParticleEngine.js"></script>
+    
+    
+	</head>
+
+	<body>
+
+       <script type="text/javascript">
+        
+           
+           function rotateAroundObjectAxis(object, axis, radians) {
+               
+            rotObjectMatrix = new THREE.Matrix4();
+            rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
+            object.matrix.multiply(rotObjectMatrix);
+            object.rotation.setFromRotationMatrix(object.matrix);
+
+           }
+
+           
+        
+        var camera, scene, renderer,
+    geometry, material, mesh;
+ 
+init();
+animate(); 
+
+           
+function init() {
+    stats = new Stats();
+    stats.setMode(0);
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+    document.body.appendChild(stats.domElement);
+
+    clock = new THREE.Clock();
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor( 0x171A22, 1 );
+
+    scene = new THREE.Scene();
+ 
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera.position.z = 1000;
+    scene.add( camera );
+ 
+    geometry = new THREE.CubeGeometry( 200, 200, 200 );
+    material = new THREE.MeshLambertMaterial( { color: 0xAA6666, wireframe: false } );
+    mesh = new THREE.Mesh( geometry, material );
+    //scene.add( mesh );
+    cubeSineDriver = 0;
+ 
+    //grid
+    var size = 512, step = 64;
+    var geometry = new THREE.Geometry();
+    var material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+
+    for ( var i = - size; i <= size; i += step ) {
+
+        geometry.vertices.push( new THREE.Vector3( - size, - 64, i ) );
+        geometry.vertices.push( new THREE.Vector3(   size, - 64, i ) );
+
+        geometry.vertices.push( new THREE.Vector3( i, - 64, - size ) );
+        geometry.vertices.push( new THREE.Vector3( i, - 64,   size ) );
+
+    }
+
+    line = new THREE.LineSegments( geometry, material );
+
+    
+    scene.add( line );
+    
+        var xAxis = new THREE.Vector3(1,0,0);
+    rotateAroundObjectAxis(line, xAxis, Math.PI / 2);
+
+    light = new THREE.DirectionalLight(0xFFFFFF,0.5);
+    light.position.set(-1,0,1);
+    scene.add(light);
+  
+    var loader = new THREE.TextureLoader();
+    smokeTexture = loader.load('images/Smoke-Element.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xFFFFFF, map: smokeTexture, transparent: true});
+    smokeGeo = new THREE.PlaneGeometry(256, 256);
+    smokeParticles = [];
+
+
+    for (p = 0; p < 150; p++) {
+        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+        particle.position.set(Math.random() * 500 - 250,Math.random()*  500 - 250,Math.random() * 1000 - 100);
+        particle.rotation.z = Math.random() * 360;
+        scene.add(particle);
+        smokeParticles.push(particle);
+    }
+ 
+    document.body.appendChild( renderer.domElement );
+ 
+}
+ 
+function animate() {
+ 
+    stats.begin();
+    delta = clock.getDelta();
+    requestAnimationFrame( animate );
+    evolveSmoke();
+    render();
+    stats.end();
+    
+}
+ 
+function evolveSmoke() {
+    var sp = smokeParticles.length;
+    while(sp--) {
+        smokeParticles[sp].rotation.z += (delta * 0.2);
+    }
+}
+
+function render() {
+ 
+    mesh.rotation.x += 0.005;
+    mesh.rotation.y += 0.01;
+    cubeSineDriver += .01;
+    mesh.position.z = 100 + (Math.sin(cubeSineDriver) * 500);
+    renderer.render( scene, camera );
+ 
+}
+
+
+           
+       </script>
+        
+		<div><canvas width="2118" height="1362" style="width: 1059px; height: 681px;"></canvas></div>
+
+	
+
+</body></html>
