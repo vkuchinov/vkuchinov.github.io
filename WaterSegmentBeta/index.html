@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>GLSL Multiple Shaders</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+
+				background-color: #050505;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+
+				color: #ffffff;
+			}
+
+			#oldie a { color:#da0 }
+		</style>
+	</head>
+	<body>
+
+		<div id="container"></div>
+		
+		<script src="js/three.min.js"></script>
+
+		<script src="js/Detector.js"></script>
+		<script src="js/stats.min.js"></script>
+        <script src="js/DDSLoader.js"></script>
+		<script src="js/MTLLoader.js"></script>
+		<script src="js/OBJLoader.js"></script>
+        
+        <script src="js/jquery-3.1.0.min.js"></script>
+        <script src="js/ShaderLoader.min.js"></script>
+  
+        <script data-src="shaders/simple_vertex.js" data-name="simple" type="x-shader/x-vertex"></script>
+        <script data-src="shaders/simple_fragment.js" data-name="simple" type="x-shader/x-fragment"></script>
+         <script data-src="shaders/simple2_vertex.js" data-name="simple2" type="x-shader/x-vertex"></script>
+        <script data-src="shaders/simple2_fragment.js" data-name="simple2" type="x-shader/x-fragment"></script>
+        
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var container, stats;
+
+			var camera, scene, renderer;
+
+			var mesh, uniforms1, attributes1;
+            
+            var rot;
+            
+            var shaders;
+
+			var clock = new THREE.Clock();
+
+            onShadersLoaded = function (shaders_)
+            {
+                shaders = shaders_;
+                
+                init();
+                animate();
+   
+            }
+            
+            loadShaders = function ()
+            {
+                SHADER_LOADER.load(onShadersLoaded);
+
+            }
+            
+            $(document).ready(loadShaders);
+            
+
+			function init() {
+
+				container = document.getElementById( 'container' );
+
+                rot = new THREE.Vector3(0.4, 0.8, 0.0);
+                
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 3000 );
+				camera.position.z = 4;
+
+				scene = new THREE.Scene();
+
+				var geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+
+				uniforms1 = {
+					time:       { value: 1.0 },
+					resolution: { value: new THREE.Vector2() },
+                    alpha:     { type: "f", value: 0.05 }
+                    
+				};
+
+                
+                    var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+
+				var onError = function ( xhr ) { };
+
+                    var textureLoader = new THREE.TextureLoader();
+                
+                    var gridXY = new THREE.GridHelper(1.5, 16);
+                    gridXY.rotation.x = Math.PI/2;
+                    //scene.add(gridXY);
+                
+					var material = new THREE.ShaderMaterial( {
+
+						uniforms:  uniforms1,
+						vertexShader: shaders.simple.vertex,
+						fragmentShader: shaders.simple.fragment,
+                        blending: 		THREE.AdditiveBlending
+
+						} );
+                    
+                    material.transparent = true;
+                    material.depthWrite = false;
+
+                    var material2 = new THREE.ShaderMaterial( {
+
+						uniforms:  uniforms1,
+						vertexShader: shaders.simple2.vertex,
+						fragmentShader: shaders.simple2.fragment,
+                        blending: 		THREE.AdditiveBlending
+
+						} );
+                    
+                
+                    material2.transparent = true;
+                    material2.depthWrite = false;
+                
+                    var material3 = new THREE.MeshLambertMaterial({color: 0x73A1B9, transparent: true, opacity: 0.5});
+                    
+					mesh = new THREE.Mesh( geometry, material );
+					mesh.position.x = 0;
+					mesh.position.y = 0;
+					//scene.add( mesh );
+
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setPath( 'assets/' );
+					objLoader.load( 'segment2.obj', function ( object ) {
+
+                        
+                        object.traverse( function ( child ) {
+
+                            if ( child instanceof THREE.Mesh ) {
+
+                                if(child.name == 'bottom') { child.material = material; }
+                                if(child.name == 'cap') { child.material = material2; }
+                                if(child.name == 'deep') { child.material = material3; }
+
+                            }
+
+                        } );
+
+                        
+                        object.uvsNeedUpdate = true;
+                        
+						object.position.y = - 0;
+                        object.scale.set(0.04, 0.04, 0.04);
+                       
+                        object.rotation.x = rot.x;
+                        object.rotation.y = rot.y;
+                        object.rotation.z = rot.z;
+         
+						scene.add( object );
+                
+
+					}, onProgress, onError );
+
+
+                
+                
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setClearColor(0x3F4144);
+				container.appendChild( renderer.domElement );
+
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				onWindowResize();
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize( event ) {
+
+				uniforms1.resolution.value.x = window.innerWidth;
+				uniforms1.resolution.value.y = window.innerHeight;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+				stats.update();
+
+			}
+
+			function render() {
+
+				var delta = clock.getDelta();
+
+				uniforms1.time.value += delta * 5;
+ 
+                //object.rotation.x = rot.x;
+                //object.rotation.y = rot.y;
+                //object.rotation.z = rot.z;
+                
+                //console.log(rot);
+                
+				mesh.rotation.y += delta * 0.5 * ( 0 % 2 ? 1 : -1 );
+				mesh.rotation.x += delta * 0.5 * ( 0 % 2 ? -1 : 1 );
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>
