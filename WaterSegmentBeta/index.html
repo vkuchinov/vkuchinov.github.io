@@ -48,8 +48,10 @@
   
         <script data-src="shaders/simple_vertex.js" data-name="simple" type="x-shader/x-vertex"></script>
         <script data-src="shaders/simple_fragment.js" data-name="simple" type="x-shader/x-fragment"></script>
-         <script data-src="shaders/simple2_vertex.js" data-name="simple2" type="x-shader/x-vertex"></script>
+        <script data-src="shaders/simple2_vertex.js" data-name="simple2" type="x-shader/x-vertex"></script>
         <script data-src="shaders/simple2_fragment.js" data-name="simple2" type="x-shader/x-fragment"></script>
+        <script data-src="shaders/waterfall2_vertex.js" data-name="waterfall" type="x-shader/x-vertex"></script>
+        <script data-src="shaders/waterfall2_fragment.js" data-name="waterfall" type="x-shader/x-fragment"></script>
         
 		<script>
 
@@ -59,7 +61,7 @@
 
 			var camera, scene, renderer;
 
-			var mesh, uniforms1, attributes1;
+			var mesh, uniforms1, uniforms2, attributes1;
             
             var rot;
             
@@ -89,7 +91,7 @@
 
 				container = document.getElementById( 'container' );
 
-                rot = new THREE.Vector3(0.4, 0.8, 0.0);
+                rot = new THREE.Vector3(0.5, 3.9, 0.2);
                 
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 3000 );
 				camera.position.z = 4;
@@ -104,7 +106,13 @@
                     alpha:     { type: "f", value: 0.05 }
                     
 				};
-
+                
+                uniforms2 = {
+					time:       { value: 1.0 },
+					resolution: { value: new THREE.Vector2() },
+                    alpha:     { type: "f", value: 0.5 }
+                    
+				};
                 
                     var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
@@ -146,7 +154,18 @@
                     material2.transparent = true;
                     material2.depthWrite = false;
                 
-                    var material3 = new THREE.MeshLambertMaterial({color: 0x73A1B9, transparent: true, opacity: 0.5});
+                    var material3 = new THREE.ShaderMaterial( {
+
+						uniforms:  uniforms2,
+						vertexShader: shaders.waterfall.vertex,
+						fragmentShader: shaders.waterfall.fragment,
+                        blending: 		THREE.AdditiveBlending
+						} );
+
+                    material3.transparent = true;
+                    material3.depthWrite = false;
+
+                    var material4 = new THREE.MeshLambertMaterial({color: 0x73A1B9, transparent: true, opacity: 0.5});
                     
 					mesh = new THREE.Mesh( geometry, material );
 					mesh.position.x = 0;
@@ -163,8 +182,10 @@
                             if ( child instanceof THREE.Mesh ) {
 
                                 if(child.name == 'bottom') { child.material = material; }
-                                if(child.name == 'cap') { child.material = material2; }
-                                if(child.name == 'deep') { child.material = material3; }
+                                if(child.name == 'capL') { child.material = material2; }
+                                if(child.name == 'capR') { child.material = material2; }
+                                if(child.name == 'waterfall') { child.material = material3; }
+                                if(child.name == 'walls') { child.material = material4; }
 
                             }
 
@@ -174,7 +195,7 @@
                         object.uvsNeedUpdate = true;
                         
 						object.position.y = - 0;
-                        object.scale.set(0.04, 0.04, 0.04);
+                        object.scale.set(0.02, 0.02, 0.02);
                        
                         object.rotation.x = rot.x;
                         object.rotation.y = rot.y;
@@ -190,7 +211,6 @@
                 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
-                renderer.setPixelRatio( window.devicePixelRatio );
                 renderer.setClearColor(0x3F4144);
 				container.appendChild( renderer.domElement );
 
@@ -207,6 +227,9 @@
 
 				uniforms1.resolution.value.x = window.innerWidth;
 				uniforms1.resolution.value.y = window.innerHeight;
+                
+                uniforms2.resolution.value.x = window.innerWidth;
+				uniforms2.resolution.value.y = window.innerHeight;
 
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
@@ -231,6 +254,7 @@
 				var delta = clock.getDelta();
 
 				uniforms1.time.value += delta * 5;
+                uniforms2.time.value += delta * 5;
  
                 //object.rotation.x = rot.x;
                 //object.rotation.y = rot.y;
