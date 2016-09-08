@@ -1,0 +1,10 @@
+GROUP:
+
+id:
+name:
+x, y position
+bounds
+children
+scale
+
+ELEMENT
