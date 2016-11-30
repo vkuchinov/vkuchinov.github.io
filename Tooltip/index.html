@@ -1,0 +1,80 @@
+<!--
+Waist Circumference
+Current     39" [positive/negative]
+Last        38"
+Goal        34"
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+<style>
+
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+</style>
+</head>
+<body>
+<span style="font-family: 'Raleway'">&nbsp;</span>
+<canvas id="myCanvas" width="512" height="768" style="border:1px solid #DEDEDE`;"></canvas>
+<script>
+
+var fontSize = 24;
+function delta(values_, delta_){  return 384/(max(values_) - min(values_)) * delta_; }
+function map(value_, min1_, max1_, min2_, max2_){ return min2_ + (value_ - min1_) / (max1_ - min1_) * (max2_ - min2_); }
+function min(values_){ return Math.min(values_.current, values_.goal, values_.last, values_.reference); }
+function max(values_){ return Math.max(values_.current, values_.goal, values_.last, values_.reference); }
+
+function drawGraph(values_){
+var currentShift, lastShift;
+values_.reference = Math.min(values_.goal, values_.current, values_.last) * 0.69;
+ctx.fillStyle = colors.lightGray;
+ctx.fillRect(32, 384, 384, 64);
+if(values_.current <= values_.last){
+ctx.fillStyle = colors.positive;
+ctx.fillRect(map(values_.goal, min(values_), max(values_), 32, 416), 384, delta(values_, values_.current - values_.goal), 64);
+ctx.fillStyle = colors.darkGray;
+ctx.fillRect(map(values_.current, min(values_), max(values_), 32, 416), 384, delta(values_, max(values_) - values_.current), 64);
+}
+else{
+ctx.fillStyle = colors.negative;
+ctx.fillRect(map(values_.goal, min(values_), max(values_), 32, 416), 384, delta(values_, values_.last - values_.goal), 64);
+ctx.fillStyle = colors.darkGray;
+ctx.fillRect(map(values_.last, min(values_), max(values_), 32, 416), 384, delta(values_, max(values_) - values_.last), 64);   
+       
+}
+
+ctx.font = fontSize + "px Raleway";
+if(values.current <= values.last) { ctx.fillStyle = colors.positive; currentShift = -fontSize / 2; lastShift = -fontSize; } else {  ctx.fillStyle = colors.negative; currentShift = -fontSize; lastShift = -fontSize / 2; }
+ctx.fillText(values_.current + "\"", map(values_.current, min(values_), max(values_), 32, 416) + currentShift, 476);
+ctx.fillStyle = "#FFFFFF";
+ctx.fillText(values_.last + "\"", map(values_.last, min(values_), max(values_), 32, 416) + lastShift, 476);
+ctx.fillText(values_.goal + "\"", map(values_.goal, min(values_), max(values_), 32, 416) - fontSize / 2, 476);
+ctx.fillText(Math.round(values_.reference) + "\"", map(values_.reference, min(values_), max(values_), 32, 416), 476);
+    
+}
+    
+var colors = { lightGray: "#C8C9CB", darkGray: "#53585F", positive: "#72bE49", negative: "#DC6A23" }; 
+var values = {current: 37, last: 39, goal: 34, reference: 0};
+    
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+ctx.fillStyle = "#494949";
+ctx.fillRect(0, 0, 512, 768);
+ctx.font = fontSize + "px Raleway";
+ctx.fillStyle = "#FFFFFF";
+ctx.fillText("Waist Circumference", 32, 64);
+if(values.current <= values.last) { ctx.fillStyle = colors.positive; } else {  ctx.fillStyle = colors.negative; }
+ctx.fillText("Current", 32, 128); ctx.fillText("39" + "\"", 256, 128);
+ctx.fillStyle = "#FFFFFF";
+ctx.fillText("Last", 32, 192); ctx.fillText("38" + "\"", 256, 192);
+ctx.fillText("Goal", 32, 256); ctx.fillText("34" + "\"", 256, 256);
+
+drawGraph(values);
+    
+
+    
+</script>
+</body>
+</html>
