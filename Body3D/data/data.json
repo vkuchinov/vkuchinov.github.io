@@ -1,24 +1,24 @@
 {
-
+    
 	"body" : {
 	
 		"ID" : 0,
 		"list" : [ "Waist", "Hips", "Bicep_R", "Bicep_L", "Thigh_R", "Thigh_L", "Calf_R", "Calf_L"] ,
         
-		"Waist" : { "measurement" : 33, "delta" : 1.0 },
-		"Hips" : { "measurement" : 40, "delta" : -2.0 },
-		"Bicep_R" : { "measurement" : 11, "delta" : -0.5 },
-		"Bicep_L" : { "measurement" : 11, "delta" : -0.5 },
-		"Thigh_R" : { "measurement" : 23, "delta" : 0.0 },
-		"Thigh_L" : { "measurement" : 23, "delta" : 0.0 },
-		"Calf_R" : { "measurement" : 14, "delta" : 0.0 },
-		"Calf_L" : { "measurement" : 14, "delta" : 0.0 },
+		"Waist" : { "current" : 39, "last" : 38, "goal" : 34, "type" : -1 },
+		"Hips" : { "current" : 42, "last" : 43, "goal" : 39, "type" : -1 },
+		"Bicep_R" : { "current" : 11, "last" : 10.5, "goal" : 12, "type" : 1 },
+		"Bicep_L" : { "current" : 11, "last" : 10.5, "goal" : 12, "type" : 1 },
+		"Thigh_R" : { "current" : 23, "last" : 22, "goal" : 20, "type" : -1 },
+		"Thigh_L" : { "current" : 23, "last" : 22, "goal" : 20, "type" : -1 },
+		"Calf_R" : { "current" : 14, "last" : 13.5, "goal" : 13, "type" : -1 },
+		"Calf_L" : { "current" : 14, "last" : 13.5, "goal" : 13, "type" : -1 },
 			
 		"_comments:" : "grams per day",
 		"CARBS" : 171.0,
 		"PROTEIN" : 171.0,
 		"FATS" : 38.0
 		
-		}	
+    }	
 		
 }

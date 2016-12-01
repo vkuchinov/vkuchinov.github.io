@@ -1,0 +1,36 @@
+
+    body {
+        font-family: Monospace;
+        background-color: #494949;
+        color: #fff;
+        margin: 0px;
+        overflow: hidden;
+    }
+    #container {
+        color: #FFFFFF;
+        position: absolute;
+        width: 100%;
+        min-width: 512px;
+        height: 100%;
+        z-index: 100;
+        display:block;
+    }
+    #scene3D {
+        padding-top: 56.25%;
+        position: absolute;
+        width: 60%;
+        min-width: 256px;
+        height: 100%;
+        z-index: 100;
+        display:block;
+    }
+    #toolkit {
+        padding-top: 56.25%;
+        position: absolute;
+        margin-left: 60%;
+        width: 40%;
+        min-width: 256px;
+        height: 100%;
+        z-index: 100;
+        display:block;
+    }
