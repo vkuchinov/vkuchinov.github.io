@@ -1,0 +1,31 @@
+
+body {
+    
+    font-family: "Montserrat", sans-serif;
+    font-family: "Open Sans", sans-serif;
+    background-color: #272727;
+    margin: 0px;
+    top: 0px;
+    left: 0px;
+    
+}
+
+#container{
+ 
+    margin: 0px;
+    
+}
+
+.tags {
+ 
+    margin: 0px;
+    background-color: #1D1D1D;
+    color: #929497;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    
+}
+
+.tags-left{ margin: 0px; float: left; width: 120px; }
+.tags-center{ margin: 0px; float: left; width: 120px; }
+.tags-right{ margin: 0px; display: inline-block; width: 360px; }

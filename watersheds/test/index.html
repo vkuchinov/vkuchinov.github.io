@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'>
+<script src="../js/d3.v4.min.js"></script>
+</head>
+<body>
+<script>
+
+console.log("draw");
+    
+var jsonCircles = [
+{ "x_axis": 30, "y_axis": 30, "radius": 20, "color" : "green" },
+{ "x_axis": 70, "y_axis": 70, "radius": 20, "color" : "purple"},
+{ "x_axis": 110, "y_axis": 100, "radius": 20, "color" : "red"}];
+
+var svg = d3.select("body").append("svg")
+                                    .attr("width", window.innerWidth)
+                                    .attr("height", window.innerHeight);
+ 
+    
+var groupA = svg.append("g").attr("id", "background");
+
+            var rect = groupA.append("rect")
+                       .attr("x", 0)
+                       .attr("y", 0)
+                       .attr("width", 400)
+                       .attr("height", 400)
+                       .style("fill", "#FF00FF");
+    
+
+var groupB = svg.append("g").attr("id", "system");
+    
+var circles = groupB.selectAll("circle")
+                          .data(jsonCircles)
+                          .enter()
+                          .append("circle");
+
+var circleAttributes = circles
+                       .attr("cx", function (d) { return d.x_axis; })
+                       .attr("cy", function (d) { return d.y_axis; })
+                       .attr("r", function (d) { return d.radius; })
+                       .style("fill", function(d) { return d.color; });
+    
+</script>
+</body>
+</html>
