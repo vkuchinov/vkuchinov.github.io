@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>RIPPLES TEST</title>
+	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    
+    <style>
+    body{ top: 0; left: 0; margin: 0;}
+    </style>
+</head>
+<body>
+	<script>
+		
+        var g;
+        //{id: i, radius: r, depth: d, color: hue}
+        var nodes = [];
+        
+        var counter = 0;
+        
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var margin = {top: 40, right: 40, bottom: 40, left: 40};
+        
+		var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+        
+//        svg.append("rect")
+//        .attr("width", "100%")
+//        .attr("height", "100%")
+//        .attr("fill", "#191919");
+        
+        console.log(svg);
+       g = svg.append("g")
+                .attr("transform", "translate(" + width/2 + ", " + height/2 + ")");
+        
+        for(var i = 0; i < 512; i++){
+            
+            var a = Math.random() * 360.0;
+            var r = Math.random() * 256.0;
+            
+            var x = Math.cos(a) * r;
+            var y = Math.sin(a) * r;
+            
+             var node = g.append("circle")
+            .attr("id", "nodes_" + i, true)
+            .attr("class", "nodes")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 3)
+            .attr("stroke", "none")
+            .attr("fill", "#DDDDDD");
+            
+            nodes.push({"id":i, "radius": 6 + Math.random() * 12, "depth" : 0, "color" : Math.random() * 360});
+            
+        }
+
+        render();
+        
+        function render(){
+            
+            var rs = getRadiuses();
+            updateNodes(rs);
+            //console.log(rs);
+            
+            if(counter > 160) { generate(); counter = 0; }
+            //if(counter % 100 == 0) { console.log(rs); }
+            window.requestAnimationFrame(render);
+            counter++;
+        }
+        
+        
+        function updateNodes(ripples_){
+            
+            var node = d3.selectAll(".nodes")
+                       .each(function(d) { 
+
+                  var n = d3.select("#" + this.attributes.id.value);
+                  var id = parseInt(n.attr("id").replace("nodes_", ""));
+                  var vX = this.attributes.cx.value;
+                  var vY = this.attributes.cy.value;
+                  if(vX == undefined || vY == undefined ) { console.log("Ooops, something wrong!"); }
+                  var magV = Math.sqrt(Math.pow(vX, 2) + Math.pow(vY, 2));
+                           
+                  for(var i = 0; i < ripples_.length; i++){
+                      
+                        var aX = vX / magV * ripples_[i];
+                        var aY = vY / magV * ripples_[i];
+                      
+                        var dist = Math.sqrt(Math.pow((aX - vX), 2) + Math.pow((aY - vY), 2));
+                        if(dist < 16) { n.attr("fill", d3.hsl(nodes[id].color, 0.8, 0.7)); n.attr("r", map(dist, 0, 16, 16, 4)); break; } 
+                        else { n.attr("fill", "#191919"); n.attr("r", 4); }
+                  }
+   
+            });
+            
+        }
+        
+        function map(value_, min1_, max1_, min2_, max2_){
+            
+            return min2_ + (value_ - min1_) / (max1_ - min1_) * (max2_ - min2_);
+            
+        }
+        
+        function generate(){
+        var circle = g.append("circle")
+            .attr("id", "ripple", true)
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 64)
+            .attr("stroke", "#DEDEDE")
+            .attr("stroke-width", 0.4)
+            .attr("fill", "none");
+        
+            console.log(circle);
+            setBulletTime(circle, {"r": 16}, {"r": 320}, 10000, "expOut", false);
+            
+        }
+            //removeBulletTime(circle, {"r": 64, "cx": width/2});
+        
+        function getRadiuses(){
+            
+            var output = [];
+            
+            var circles = d3.selectAll("#ripple")
+                          .each(function(d) { output.push(this.attributes.r.value); });
+            
+            return output;
+            
+        }
+        
+        function setBulletTime(object_, parameters0_, parameters1_, duration_, type_, loop_){
+
+            if(Object.keys(parameters0_).length==Object.keys(parameters1_).length 
+               && Object.keys(parameters0_).every(function(v,i) { return v === Object.keys(parameters1_)[i]})) {
+      
+                object_.attr("r", 16)
+                .transition()
+                //.ease(type_)
+                .duration(duration_)
+                .attr("r", 256)
+                .each("end", function(d) { if(loop_) { setBulletTime(object_, parameters0_, parameters1_, duration_, type_, loop_); } else { this.remove(); } } ); 
+//                
+            } else { console.log("Oooops, something wrong!"); }
+
+        }
+        
+        function removeBulletTime(object_, parameters_){ object_.transition(); }
+
+	</script>
+</body>
+</html>

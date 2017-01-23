@@ -1,0 +1,68 @@
+
+
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>RIPPLES TEST</title>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<script>
+		
+        
+        //TWO POSSIBLE ISSUES
+        //1. svg <> group
+        //2. parseInt values !!!![MOST LIKELY]!!!!
+        
+        var g;
+        //{id: i, radius: r, depth: d, color: hue}
+        var nodes = [];
+        
+        var counter = 0;
+        
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        
+		var svg = d3.select("body").append("svg")
+					.attr({
+						width: width,
+						height: height
+					});
+        
+       
+        var g = svg.append("g")
+				   .attr("transform", "translate(" + width/2 + "," + height/2 + ")");
+        
+         var circle = g.append("circle")
+            .attr("id", "ripple", true)
+            .attr({"cx": 0, "cy": 0, "r": 32})
+            .attr("stroke", "#494949")
+            .attr("stroke-width", 1.0)
+            .attr("fill", "none")
+            .transition()
+            .duration(2500)
+            .attr("r", 256);
+        
+        
+        function setBulletTime(object_, parameters0_, parameters1_, duration_, type_, loop_){
+
+            if(Object.keys(parameters0_).length==Object.keys(parameters1_).length 
+               && Object.keys(parameters0_).every(function(v,i) { return v === Object.keys(parameters1_)[i]})) {
+      
+                object_.attr(parameters0_)
+                .transition()
+                .ease(type_)
+                .duration(duration_)
+                .attr(parameters1_)
+                .each("end", function(d) { if(loop_) { setBulletTime(object_, parameters0_, parameters1_, duration_, type_, loop_); } else { this.remove(); } } ); 
+                
+            } else { console.log("Oooops, something wrong!"); }
+
+        }
+        
+        function removeBulletTime(object_, parameters_){ object_.transition(); }
+
+	</script>
+</body>
+</html>
