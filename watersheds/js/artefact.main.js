@@ -22,13 +22,13 @@ var Interface = function() {
  
   this.wpm = 150;
   this.average = 24;
-  this.interval = 3; //Math.floor(60.0 / this.wpm * this.average);
-  this.pause = 3; //by default 6 Math.floor(60.0 / this.wpm * this.average);
+  this.interval = 8; //Math.floor(60.0 / this.wpm * this.average);
+  this.pause = 6; //by default 6 Math.floor(60.0 / this.wpm * this.average);
   this.start = false;
   //this.dynamic = false;
 
-  this.generator = 3.5;
-  this.transition = 15;
+  this.generator = 56;
+  this.transition = 240;
     
   this.rest = 0.132;
   this.angle = 0.6;
@@ -50,8 +50,8 @@ window.onload = function() {
   g0.add(controls, "start").onChange(function(value){ this.initialValue = value; toggleFullScreen(value); });
     
   s0 = gui.addFolder("RIPPLING SYSTEM");
-  s0.add(controls, "generator", 2.0, 6.0).onChange(function(value){ system.theta = parseInt(value * 1000); });
-  s0.add(controls, "transition", 5.0, 30.0).onChange(function(value){ TRANSITION_INTERVAL = parseInt(value * 1000); });
+  s0.add(controls, "generator", 2.0, 999.0).onChange(function(value){ system.theta = parseInt(value * 1000); });
+  s0.add(controls, "transition", 5.0, 999.0).onChange(function(value){ TRANSITION_INTERVAL = parseInt(value * 1000); });
     
   s1 = gui.addFolder("TIDAL SYSTEM");
   s1.add(controls, "rest", 0.025, 0.25).onChange(function(value){ REST_DISTANCE = value; });
@@ -152,7 +152,7 @@ function Timer() {
         this.passed = 0;
         this.state *= -1;
         
-        (this.state == -1) ? system.display(): system.pause();
+        if(mode == 0) { (this.state == -1) ? system.display(): system.pause(); }
             
         } else {
         

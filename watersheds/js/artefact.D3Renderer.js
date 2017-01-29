@@ -272,6 +272,11 @@ var D3Renderer = {
         var w = window.innerWidth;
         var h = window.innerHeight;
         
+        var systemX = 0; //Number(d3.transform(d3.select("#particles").attr("transform")).translate[0]);
+        var systemY = 0; //Number(d3.transform(d3.select("#particles").attr("transform")).translate[1]);
+        
+        //console.log(systemX + " " + systemY);
+        
         var params = {x: x_, y: y_};
         
         //top left
@@ -282,7 +287,7 @@ var D3Renderer = {
         
         var HUD = scene_.append("g")
             .attr("id", "HUD")
-            .attr("transform", "translate(" + (x_ - params.x) + "," + (y_ - params.y) + ")");
+            .attr("transform", "translate(" + (x_ - params.x + systemX) + "," + (y_ - params.y + systemY) + ")");
 
         HUD.append("rect")
             .attr("x", 0)
@@ -318,7 +323,7 @@ var D3Renderer = {
 
             HUD.attr("opacity", 0.0)
             .transition()
-            .duration(1000)
+            .duration(1500)
             .attr("opacity", 1.0);
         
         

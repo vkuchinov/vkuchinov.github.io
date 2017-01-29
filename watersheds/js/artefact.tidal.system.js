@@ -25,6 +25,7 @@
 
 "use strict"
 var SCALE_RATIO = 150;
+var TIME_RATE = 0.0165; // 1/60
 var ZERO;
 
 var NUM_OF_NEIGHBOURS = 8;
@@ -34,12 +35,14 @@ var PARTICLE_SIZE = 0.05; //for simulatio
 var GROUND_OFFSET = 32;
 var SCRREN_MARGINS = 64;
 
+var experimental = 0;
+
 //wave machine parameters
 var machine;
 var MAX_ANGLE = 0.6;
 var ang = 0.0;
 var ang_inc = 0.0038;
-var timeStep = 1.0 / 60.0, velocityIterations = 8, positionIterations = 3;
+var timeStep = TIME_RATE, velocityIterations = 8, positionIterations = 3;
 var globalPos, globalAngle;
 
 var world = null;   //LiquidFun.js requires world as global
@@ -109,9 +112,11 @@ var tidalSystem = {
     },
     
     update: function(timer_){
+        
+        if(experimental % 30 == 0){
 
         world.Step(timeStep, velocityIterations, positionIterations);
-        machine.time += 1 / 60;
+        machine.time += TIME_RATE;
         machine.joint.SetMotorSpeed(0.05 * Math.cos(machine.time) * Math.PI);
 
         var body = world.bodies[0];
@@ -141,6 +146,8 @@ var tidalSystem = {
         var kd = new kdTree(points, distance, ["x", "y"]);
         var particleGroup = particles.selectAll("g.particle").data(system.particleGroups)
         var positionBuf = system.GetPositionBuffer();
+        
+        
 		particleGroup.enter().append("g").classed("particle", true)
 		particleGroup.each(function(pg){
 
@@ -184,14 +191,8 @@ var tidalSystem = {
              })
             .attr("r", function(d, i){ return nodes[i].radius; })
             .attr("cx", function(d, i){
-          
-                //check if it's off-screen
-                //...
-                if(positionBuf[(i + offset) * 2] * SCALE_RATIO < SCRREN_MARGINS || positionBuf[(i + offset) * 2] * SCALE_RATIO > window.innerWidth - SCRREN_MARGINS) { nodes[i].state = 0; }
 				return positionBuf[(i + offset) * 2] * SCALE_RATIO;
 			}).attr("cy", function(d, i){
-                //check if it's off-screen
-                if(positionBuf[(i + offset) * 2 + 1] * SCALE_RATIO < SCRREN_MARGINS || positionBuf[(i + offset) * 2 + 1] * SCALE_RATIO > window.innerHeight - SCRREN_MARGINS) { nodes[i].state = 0; }
 				return positionBuf[(i + offset) * 2 + 1] * SCALE_RATIO;
 			})
             .attr("stroke", "#FFFFFF")
@@ -201,7 +202,7 @@ var tidalSystem = {
                                            d3.select(this).attr("stroke-width", particleStyle.weight); })
             
             .on("mouseout", function(d, i) { d3.select(this).attr("stroke-width", 0.0); })
-            .on("click", function(d, i) { tidalSystem.click(d); });
+            .on("click", function(d, i) { var ii = parseInt(d3.select(this).attr("id").replace("particle_", "")); console.log(ii); tidalSystem.click({nodeID: ii, xmlID: nodes[ii].xml}); });
                 
             } else {
                 
@@ -248,6 +249,9 @@ var tidalSystem = {
         particleGroup.attr("transform", "translate(" + globalPos.x + ", " + globalPos.y + "), rotate(" + (-globalAngle) + ")");
  
 		particleGroup.exit().remove();
+        
+    }
+        experimental++;
 
 	},
     
@@ -301,33 +305,34 @@ var tidalSystem = {
     },
     
     takeover: function(index_, data_){
+
+        var node = d3.select("#particle_" + index_.xmlID);
+        node.attr("stroke-width", 0.0);
         
-        var a = Math.random() * 360.0;
-        var r = Math.random() * MAX_RADIUS;
-
-        var xy = ripplingSystem.uniform();
-        var x = xy.x * MAX_RADIUS;
-        var y = xy.y * MAX_RADIUS;
-
-
         var words = data_.message.replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim().split(" ").length;
         var r = this.map(Math.min(Math.max(parseInt(words), 1), 48), 1, 48, 6, 20);
 
         var c = colors[this.findByKey(categories, "id", data_.category, 0)];
         var f = foam[this.findByKey(categories, "id", data_.category, 0)];
 
-        var node = d3.select("#particle_" + index_.xmlID);
-        node.attr("cx", x)
-        .attr("cy", y);
-
         nodes[index_.nodeID] = {"id" : index_.nodeID, "xml" : next, "radius": r, "depth" : 0, "color" : c, "foam" : f, "state" : 0};
+        
+        
         //this.delete(nodes, index_.nodeID);
         //nodes.push({"id" : next, "radius": r, "depth" : 0, "color" : c, "state" : 0});
 
     },
     
     
-    click : function(d_){
+    click : function(index_){
+        
+        d3.selectAll("#HUD").remove();
+        
+        D3Renderer.highlight(particles, index_);
+        this.takeover(index_, dataset[next]);                          
+        
+        console.log("node: " + index_.nodeID + " xml: " + index_.xmlID + " " + next);
+        if(next < dataset.length) { next++; } else { next = 0; }
         
     },
     

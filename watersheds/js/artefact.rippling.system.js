@@ -16,8 +16,8 @@
 var MAX_RADIUS = 240.0;
 var MAX_NODES = 768;
 
-var GENERATOR_INTERVAL = 3500;
-var TRANSITION_INTERVAL = 15000;
+var GENERATOR_INTERVAL = 56000;
+var TRANSITION_INTERVAL = 240000;
 
 var ripplingSystem = {
 
@@ -97,7 +97,7 @@ var ripplingSystem = {
                                                d3.select(this).attr("stroke-width", particleStyle.weight); })
             
             .on("mouseout", function(d) { d3.select(this).attr("stroke-width", 0.0); })
-            .on("click", function(d) { ripplingSystem.click(d); });
+            .on("click", function(d, i) { var ii = parseInt(d3.select(this).attr("id").replace("particle_", "")); console.log(ii); ripplingSystem.click({nodeID: ii, xmlID: nodes[ii].xml}); });
                 
             } else {
                 
@@ -118,7 +118,7 @@ var ripplingSystem = {
             //feel free  to play with these parameters
             
             var words = dataset_[i].message.replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim().split(" ").length;
-            var r = this.map(Math.min(Math.max(parseInt(words), 1), 48), 1, 48, 6, 20);
+            var r = this.map(Math.min(Math.max(parseInt(words), 1), 48), 1, 48, 2, 20);
 
             var c = colors[this.findByKey(categories, "id", dataset_[i].category, 0)];
             
@@ -151,7 +151,7 @@ var ripplingSystem = {
         
         d3.select("#HUD").attr("opacity", 1.0)
         .transition()
-        .duration(1000)
+        .duration(1500)
         .attr("opacity", 0.0)
         .each("end", function(d) { this.remove(); });
         
@@ -178,7 +178,8 @@ var ripplingSystem = {
 
         var node = d3.select("#particle_" + index_.xmlID);
         node.attr("cx", x)
-        .attr("cy", y);
+        .attr("cy", y)
+        .attr("stroke-width", 0.0);
 
         nodes[index_.nodeID] = {"id" : index_.nodeID, "xml" : next, "radius": r, "depth" : 0, "color" : c, "state" : 0};
         //this.delete(nodes, index_.nodeID);
@@ -186,9 +187,15 @@ var ripplingSystem = {
 
     },
     
-     click : function(d_){
+     click : function(index_){
         
-        console.log("clicked");
+        d3.selectAll("#HUD").remove();
+        
+        D3Renderer.highlight(particles, index_);
+        this.takeover(index_, dataset[next]);                          
+        
+        //console.log("node: " + index_.nodeID + " xml: " + index_.xmlID + " " + next);
+        if(next < dataset.length) { next++; } else { next = 0; }
         
     },
     
@@ -302,6 +309,7 @@ function Generator(theta_) {
                 .attr("stroke-width", 0.0)
                 .attr("fill", "none");
 
+            //ripples transitons, don't do expnentials here
             D3Renderer.bulletTime(circle, {"r": 16}, {"r": 320}, TRANSITION_INTERVAL, "sine", false);
         
     }
