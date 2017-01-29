@@ -6,9 +6,6 @@
  * 
  * The new node would have its own unique position. 
  *
- * The extra line between the end of the @file docblock
- * and the file-closure is important.
- *
  * @author Vladimir V. KUCHINOV
  * @email  helloworld@vkuchinov.co.uk
  *
@@ -16,46 +13,32 @@
 
 "use strict"
 
+var MAX_RADIUS = 240.0;
+var MAX_NODES = 768;
+
 var GENERATOR_INTERVAL = 3500;
 var TRANSITION_INTERVAL = 15000;
 
 var ripplingSystem = {
 
-    inits: function() {
+    inits: function(dataset_) {
 
-        this.timer = new Timer();
+        //this.timer = new Timer();
         this.generator = new Generator(GENERATOR_INTERVAL);
         
-        for(var i = 0; i < MAX_NODES; i++){
-
-            var a = Math.random() * 360.0;
-            var r = Math.random() * MAX_RADIUS;
-
-            var xy = ripplingSystem.uniform();
-            var x = xy.x * MAX_RADIUS;
-            var y = xy.y * MAX_RADIUS;
-
-            var node = particles.append("circle")
-            .attr("id", "nodes_" + i, true)
-            .attr("class", "nodes")
-            .attr("cx", x)
-            .attr("cy", y)
-            .attr("r", 1)
-            .attr("stroke", "none")
-            .attr("fill", "#FF00FF");
-
-            nodes.push({"id":i, "radius": 6 + Math.random() * 12, "depth" : 0, "color" : colors[Math.round(Math.random() * 8)]});
-
-        }
+        this.feed(dataset_);
         
       this.generator.generate(particles);
 
     },
 
-    update: function() {
+    update: function(timer_) {
 
-        this.timer.update();
-        this.generator.update(this.timer.getInterval());
+        //dublicated instance from main class
+        //conflicts
+        
+        //this.timer.update();
+        this.generator.update(timer_.getInterval());
         
         if(nodes.length == MAX_NODES){
             
@@ -66,7 +49,7 @@ var ripplingSystem = {
                            .each(function(d) { 
 
                       var n = d3.select("#" + this.attributes.id.value);
-                      var id = parseInt(n.attr("id").replace("nodes_", ""));
+                      var id = parseInt(n.attr("id").replace("particle_", ""));
                       var vX = this.attributes.cx.value;
                       var vY = this.attributes.cy.value;
                       if(vX == undefined || vY == undefined ) { console.log("Ooops, something wrong!"); }
@@ -78,8 +61,8 @@ var ripplingSystem = {
                             var aY = vY / magV * ripples[i];
 
                             var dist = Math.sqrt(Math.pow((aX - vX), 2) + Math.pow((aY - vY), 2));
-                            if(dist < 8) { n.attr("fill", nodes[id].color); n.attr("r", ripplingSystem.map(dist, 0, 8, nodes[id].radius, 4)); break; } 
-                            else { n.attr("fill", "none"); n.attr("r", 4); }
+                            if(dist < 8) { n.attr("fill", nodes[id].color); n.attr("r", ripplingSystem.map(dist, 0, 8, nodes[id].radius, 4)); nodes[id].state = 1; break; } 
+                            else { n.attr("fill", "none"); n.attr("r", 4); nodes[id].state = 0; }
                       }
 
                 });
@@ -87,18 +70,138 @@ var ripplingSystem = {
 
     },
 
-    feed: function(min_) {
+    feed: function(dataset_) {
 
-        //console.log(min_);
-        //        for (var i = 0; i < min_; i++) {
-        //
-        //            var a = -Math.PI + Math.random() * Math.PI * 2.0;
-        //            var x = ripplingSystem.monteCarlo(MAX_RADIUS) * Math.cos(a);
-        //            var y = ripplingSystem.monteCarlo(MAX_RADIUS) * Math.sin(a);
-        //            nodes.push(new Node(i, x, y, null));
-        //
-        //        }
+        var upto = Math.min(MAX_NODES, dataset_.length);
+        
+        for(var i = 0; i < upto; i++){
 
+            var a = Math.random() * 360.0;
+            var r = Math.random() * MAX_RADIUS;
+
+            var xy = ripplingSystem.uniform();
+            var x = xy.x * MAX_RADIUS;
+            var y = xy.y * MAX_RADIUS;
+
+            if(gup("mode") == "interactive") { 
+            var node = particles.append("circle")
+            .attr("id", "particle_" + i, true)
+            .attr("class", "nodes")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 1)
+            .attr("stroke", "#FFFFFF")
+            .attr("stroke-width", 0.0)
+            .attr("fill", "#FF00FF")
+            .on("mouseover", function(d) { d3.select(this).moveToFront(); 
+                                               d3.select(this).attr("stroke-width", particleStyle.weight); })
+            
+            .on("mouseout", function(d) { d3.select(this).attr("stroke-width", 0.0); })
+            .on("click", function(d) { ripplingSystem.click(d); });
+                
+            } else {
+                
+            var node = particles.append("circle")
+            .attr("id", "particle_" + i, true)
+            .attr("class", "nodes")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 1)
+            .attr("stroke", "#FFFFFF")
+            .attr("stroke-width", 0.0)
+            .attr("fill", "#FF00FF");
+                
+            }
+
+            //there are messages up to 240 words, that"s why
+            //I use "constrain" to limit length to 48 words
+            //feel free  to play with these parameters
+            
+            var words = dataset_[i].message.replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim().split(" ").length;
+            var r = this.map(Math.min(Math.max(parseInt(words), 1), 48), 1, 48, 6, 20);
+
+            var c = colors[this.findByKey(categories, "id", dataset_[i].category, 0)];
+            
+            //id is a reference to xml
+            nodes.push({"id" : i, "xml": i, "radius": r, "depth" : 0, "color" : c, "state" : 0});
+
+        }
+        
+            next = nodes.length;
+
+    },
+    
+    display : function() {
+
+        //returns composite object {nodeID: n, xmlID: n}
+        var index = this.findLowestIDByKey(nodes, "state", 1);
+    
+        D3Renderer.highlight(particles, index);
+        this.takeover(index, dataset[next]);                          
+        
+        console.log("node: " + index.nodeID + " xml: " + index.xmlID + " " + next);
+        if(next < dataset.length) { next++; } else { next = 0; }
+        
+    },
+
+    pause : function(){
+        
+        //d3.selectAll("g.HUD").remove();
+        
+        
+        d3.select("#HUD").attr("opacity", 1.0)
+        .transition()
+        .duration(1000)
+        .attr("opacity", 0.0)
+        .each("end", function(d) { this.remove(); });
+        
+        //hide HUD, clear its circle
+        
+        //all nodes to next update
+        
+    },
+    
+    takeover: function(index_, data_){
+        
+        var a = Math.random() * 360.0;
+        var r = Math.random() * MAX_RADIUS;
+
+        var xy = ripplingSystem.uniform();
+        var x = xy.x * MAX_RADIUS;
+        var y = xy.y * MAX_RADIUS;
+
+
+        var words = data_.message.replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim().split(" ").length;
+        var r = this.map(Math.min(Math.max(parseInt(words), 1), 48), 1, 48, 6, 20);
+
+        var c = colors[this.findByKey(categories, "id", data_.category, 0)];
+
+        var node = d3.select("#particle_" + index_.xmlID);
+        node.attr("cx", x)
+        .attr("cy", y);
+
+        nodes[index_.nodeID] = {"id" : index_.nodeID, "xml" : next, "radius": r, "depth" : 0, "color" : c, "state" : 0};
+        //this.delete(nodes, index_.nodeID);
+        //nodes.push({"id" : next, "radius": r, "depth" : 0, "color" : c, "state" : 0});
+
+    },
+    
+     click : function(d_){
+        
+        console.log("clicked");
+        
+    },
+    
+    delete : function(array_, indices_){
+        
+        for(var j = 0; j < indices_.length; j++){
+          
+            for(var i = 0; i < array_.length; i++) { if(i === indices_[j]) { array_.splice(i, 1); } }
+            
+        }
+        
+        return array_;
+        
     },
     
     map: function(value_, min1_, max1_, min2_, max2_){ 
@@ -135,8 +238,32 @@ var ripplingSystem = {
 
         }
 
-    }
+    },
+    
+    findByKey: function(array_, key_, value_, default_) {
+        
+        for (var i = 0; i < array_.length; i++) {
+            if (array_[i][key_] === value_) {
+                return i;
+            }
+        }
+        return default_;
+    },
 
+    findLowestIDByKey: function(array_, key_, value_) {
+        
+
+        var available = [];
+        var keys = [];
+        
+        for (var i = array_.length - 1; i >= 0; i--) {
+            if (array_[i][key_] === value_) { available.push({ nodeID: i, xmlID : array_[i]["xml"]}); 
+                                              keys.push( array_[i]["xml"]); }
+        }
+        
+        var lowest = Math.min.apply(null, keys);
+        return available[this.findByKey(available, "xmlID", lowest, 0)];
+    }
 }
 
 function Generator(theta_) {
@@ -189,55 +316,6 @@ function Generator(theta_) {
         
         return array_;
         
-    }
-
-}
-
-function Timer() {
-
-    this.current = performance.now();
-    this.last = 0;
-    this.frame;
-
-    this.update = function() {
-
-        this.last = this.current;
-        this.current = performance.now();
-        this.frame = this.current - this.last;
-
-    }
-
-    this.getInterval = function() {
-        return performance.now() - this.last;
-    }
-
-}
-
-function Speed(step_, interval_) {
-
-    this.step = step_;
-    this.interval = interval_;
-
-    this.ratio = 1.0;
-
-    this.set = function(ratio_) {
-        this.ration = ratio_;
-    }
-
-    //time, beginning, change, duration
-    this.linear = function(t_, b_, c_, d_) {
-
-    }
-
-    this.backIn = function(t_, b_, c_, d_) {
-
-        var s = 1.70158;
-        return c * (t /= d) * t * ((s + 1.0) * t - s) + b;
-
-    }
-
-    this.expIn = function(t_, b_, c_, d_) {
-        return (t == 0) ? b : c * Math.pow(2.0, 10 * (t / d - 1.0)) + b;
     }
 
 }

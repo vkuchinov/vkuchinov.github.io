@@ -1,16 +1,14 @@
 //GLOBAL VARIABLES
+
 var width = window.innerWidth;
 var height = window.innerHeight;
-
-var MAX_NODES = 1024; 
-var MAX_RADIUS = 240.0;
 
 var scene;
 var currentFrame = 0;
 
 var mode = 0; //by default automous
 
-var system, tags, particles, HUD;
+var system, tags, particles, HUD, next;
 var nodes = [];
 
 var palette = {
@@ -23,8 +21,10 @@ var palette = {
     teal: "#6AC5B3",
     blue: "#397BA3",
     yellow: "#ECBE42",
+    lime: "#E4FC3F", 
     black: "#241F1F"
 };
+
 
 var bleachingA = {
     pink: "#D7C3DA",
@@ -36,6 +36,7 @@ var bleachingA = {
     teal : "#9ED1EE",
     blue : "#6294C6",
     yellow : "#E1D1E1",
+    lime : "#EFF5CA",
     black : "#362F4A", 
 };
 
@@ -49,6 +50,7 @@ var bleachingB = {
     teal : "#D6EAE6 ",
     blue : "#C8D6DF",
     yellow : "#F2E8CE",
+    lime : "#EFF5CA",
     black : "#362F4A", 
 };
 
@@ -60,15 +62,18 @@ var categories = [
     //there are 10 categories as well as there are 10 colors, so I could suggest
     //that I should keep the same order Inclusivity<>pink ... Personal<>black
     
-    {id: 1, en: "Inclusivity & Accessibility", fr: "Inclusivité et accessibilite"},
-    {id: 3, en: "Cultural & Historical Conservation", fr: "Conservation culturelle et historique"},
-    {id: 5, en: "Environmental Sustainability", fr: "Viabilité de l’environnement"},
-    {id: 7, en: "Human Rights", fr: "Droits humains"},
-    {id: 9, en: "Physical & Mental Health", fr: "Santé physique et mentale"},
-    {id: 11, en: "LGBTQ2A Rights", fr: "Droits LGBTQ2A"},
-    {id: 13, en: "Political Representation", fr: "Représentation politique"},
-    {id: 15, en: "New Canadian & Immigration Integration", fr: "Intégration canadienne et immigration"},
-    {id: 17, en: "Indigenous Rights", fr: "Droits autochtones"},
-    {id: 19, en: "Personal & Community Development", fr: "Développement de soi et de la communauté"}
+    {"id": 1, "en": "Inclusivity & Accessibility", "fr": "Inclusivité et accessibilite"},
+    {"id": 3, "en": "Cultural & Historical Conservation", "fr": "Conservation culturelle et historique"},
+    {"id": 5, "en": "Environmental Sustainability", "fr": "Viabilité de l’environnement"},
+    {"id": 7, "en": "Human Rights", "fr": "Droits humains"},
+    {"id": 9, "en": "Physical & Mental Health", "fr": "Santé physique et mentale"},
+    {"id": 11, "en": "LGBTQ2A Rights", "fr": "Droits LGBTQ2A"},
+    {"id": 13, "en": "Political Representation", "fr": "Représentation politique"},
+    {"id": 15, "en": "New Canadian & Immigration Integration", "fr": "Intégration canadienne et immigration"},
+    {"id": 17, "en": "Indigenous Rights", "fr": "Droits autochtones"},
+    {"id": 19, "en": "Personal & Community Development", "fr": "Développement de soi et de la communauté"}
     
 ];
+
+
+var dataset;

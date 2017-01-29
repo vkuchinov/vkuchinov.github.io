@@ -1,0 +1,13 @@
+
+TYPOGRAPHY
+
+You can turn on/off message length [words] by defining
+MESSAGE_LIMIT @ artefact.D3Renderer.js
+
+0: turns it off, any other value is number of words allowed 
+   the last word would be replaced by ellipsis [...]
+   
+   Extra tweaking: ellipsis shouldn't have space ahead.
+   
+   
+   

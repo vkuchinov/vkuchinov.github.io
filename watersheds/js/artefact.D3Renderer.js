@@ -1,3 +1,16 @@
+/**
+ *
+ * @D3RENDERER
+ * A very basic library designed for visualising LiquidFun particle system
+ * as well as my own model for circular waves.
+ *
+ * There are 3 general items: system, HUD (information pop-up) and tags menu.
+ *
+ * @author Vladimir V. KUCHINOV
+ * @email  helloworld@vkuchinov.co.uk
+ *
+ */
+
 /*
 
 <wish>
@@ -30,17 +43,12 @@ http://stackoverflow.com/questions/13595175/updating-svg-element-z-index-with-d3
 var text_element = plot.select("text");
 var textWidth = text_element.node().getBBox().width
 
-HUD
-update
-hide / show
-position
-
 */
 
 var XML_LIMIT = 512;
 var XML_URL = "xml/data.xml";
 
-var TAGS_URL = "json/tags_v2.json"
+var TAGS_URL = "json/tags.json"
 var tagStyle = {
     active: "#1D1D1D",
     inactive: "#CECECE",
@@ -62,7 +70,7 @@ var hudStyle = {
 
 var particleStyle = {
     stroke: "#FFFFFF",
-    weight: 2.0,
+    weight: 2.5,
     opacity: 0.9,
     min: 8.0,
     max: 16.0
@@ -73,7 +81,6 @@ var D3Renderer = {
     init: function() {
 
         scene = d3.select("body").append("svg").attr("id", "scene").style("width", "100%").style("height", "100%");
-        //.on("click", function(d){ d3.selectAll("svg > #tags > *").style("visibility", "hidden"); });
 
         //TAGS INITIALIZATION
 
@@ -100,20 +107,10 @@ var D3Renderer = {
                     d3.select(this).select("rect").attr("fill", tagStyle.over);
                 })
                 .on("mouseout", function(d) {
-                    //if (d.visible == true) {
+              
                         d3.select(this).select("rect").attr("fill", tagStyle.active);
-                    //} else {
-                    //    d3.select(this).select("rect").attr("fill", tagStyle.inactive);
-                    //}
                 })
-                
-//                .on("click", function(d) {
-//                    var c = d3.select(this).select("rect").attr("fill");
-//                    if (c == tagStyle.active) {
-//                        d3.select(this).select("rect").attr("fill", tagStyle.inactive);
-//                    } else {
-//                        d3.select(this).select("rect").attr("fill", tagStyle.active);
-//                    }
+    
                     
                 var background = tag.append("rect")
                                 .attr("x", -6)
@@ -149,12 +146,13 @@ var D3Renderer = {
 
                 return {
 
-                  id: wish.querySelector("id").textContent,
+                  id: parseInt(wish.querySelector("id").textContent),
                   partner: wish.querySelector("partnerid").textContent,
                   featured: wish.querySelector("featured").textContent,
                   name: wish.querySelector("name").textContent,
-                  age: wish.querySelector("age").textContent,
+                  age: parseInt(wish.querySelector("age").textContent),
                   city: wish.querySelector("city").textContent,
+                  category: parseInt(wish.querySelector("categoryid").textContent),
                   message: wish.querySelector("text").textContent
 
                 };
@@ -187,27 +185,12 @@ var D3Renderer = {
 
     feed: function(particles_) {
 
-        //console.time("caption A");
-        var t0 = performance.now();
-        var min = Math.min(MAX_NODES, dataset.length);
+        //var t0 = performance.now();
+        //var min = Math.min(MAX_NODES, dataset.length);
 
-        ripplingSystem.feed(min);
+        //ripplingSystem.feed(min);
 
-        console.log("Initial XML data was processed in " + (performance.now() - t0) + " milliseconds.");
-        
-        for(var i = 0; i < 512; i++){
-
-            //if(ripplingparticles.nodes[i] != undefined) {
-
-            //D3Renderer.drawParticle(particles_, i, ripplingparticles.nodes[i].cx, ripplingparticles.nodes[i].cy, 
-            //                        ripplingparticles.nodes[i].radius, ripplingparticles.nodes[i].color);
-
-            //}
-
-        }
-        
-        //D3Renderer.highlight(particles_, "particle_16");
-        //D3Renderer.updateData(particles_);
+        //console.log("Initial XML data was processed in " + (performance.now() - t0) + " milliseconds.");
         
     },
 
@@ -249,11 +232,6 @@ var D3Renderer = {
             console.log("You have reached the end of XML universe!")
         };
 
-        //you are working with nodes and particles as group
-        //pick the oldest node (min id_);
-        //replalce it with new one
-        //change its id, position, radius and color
-
     },
 
     drawCircle: function(scene_, x_, y_, radius_) {
@@ -287,21 +265,24 @@ var D3Renderer = {
 
     },
 
-    HUD: function(scene_, id_, x_, y_, visible_) {
+    HUD: function(scene_, object_, message_ , x_, y_, visible_) {
 
         d3.selectAll("g.HUD").remove();
 
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        
+        var params = {x: x_, y: y_};
+        
+        //top left
+        if(x_ <= w/2 && y_ <= h/2) { params = {x: 0, y: 0, tx: 0} }
+        else if(x_ <= w/2 && y_ > h/2) { params = {x: 0, y: 92, tx: 0} }
+        else if(x_ > w/2 && y_ <= h/2) { params = {x: 344, y: 0,  tx: 312} }
+        else { params = {x: 344, y: 92, tx: 312} }
+        
         var HUD = scene_.append("g")
             .attr("id", "HUD")
-            .attr("transform", "translate(" + x_ + "," + y_ + ")");
-
-        HUD.append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", "32px")
-            .attr("height", "92px")
-            .style("fill", hudStyle.tag)
-            .style("fill-opacity", 0.9);
+            .attr("transform", "translate(" + (x_ - params.x) + "," + (y_ - params.y) + ")");
 
         HUD.append("rect")
             .attr("x", 0)
@@ -312,12 +293,35 @@ var D3Renderer = {
             .style("fill", hudStyle.textarea)
             .style("fill-opacity", 0.9);
 
+        HUD.append("rect")
+            .attr("x", params.tx)
+            .attr("y", 0)
+            .attr("width", "32px")
+            .attr("height", "92px")
+            .style("fill", hudStyle.tag)
+            .style("fill-opacity", 0.9);
+
+        HUD.append("circle")
+               .attr("cx", params.x)
+               .attr("cy", params.y)
+               .attr("r", object_.attr("r"))
+               .attr("fill", object_.attr("fill"))
+               .attr("stroke", "#FFFFFF")
+               .attr("stroke-width", 2.5);
+        
+        
         var label = HUD.append("g")
             .attr("id", "placeholder")
             .attr("transform", "translate(" + 40 + "," + 16 + ")");
 
-        D3Renderer.wrapLabel(label, "Praesent porta pulvinar elit vitae pharetra. Fusce laoreet vulputate maximus. Fusce pellentesque eleifend nisi, et maximus turpis scelerisque et. Proin pretium lobortis diam, in fermentum metus dictum sed. Donec sagittis lacinia tellus ac tempus. Aenean auctor ex id sollicitudin posuere.", 286);
+        D3Renderer.wrapLabel(label, message_, 268);
 
+            HUD.attr("opacity", 0.0)
+            .transition()
+            .duration(1000)
+            .attr("opacity", 1.0);
+        
+        
         if (!visible_) {
             d3.selectAll("g.HUD").remove();
         }
@@ -326,33 +330,23 @@ var D3Renderer = {
 
     highlight: function(particles_, id_) {
 
-        var object = particles_.select("#particle_16");
+        var obj = particles_.select("#particle_" + id_.nodeID);
 
-        object.attr("stroke-width", particleStyle.weight);
-        var hud = d3.select("#HUD");
+        //obj.attr("stroke-width", particleStyle.weight);
+        
+        d3.selectAll("g.HUD").remove();
 
         var values = particles_.attr("transform").replace("translate(", "").replace(")", "").trim().split(",");
 
-        var translateX = parseInt(values[0]) + parseInt(object.attr("cx"));
-        var translateY = parseInt(values[1]) + parseInt(object.attr("cy"));
+        var translateX = parseInt(values[0]) + parseInt(obj.attr("cx"));
+        var translateY = parseInt(values[1]) + parseInt(obj.attr("cy"));
 
-        hud.attr("transform", "translate(" + translateX + "," + translateY + ")");
-
-        //update message
-        hud.select("#placeholder").remove();
-
-        var label = hud.append("g")
-            .attr("id", "placeholder")
-            .attr("transform", "translate(" + 40 + "," + 16 + ")");
-
-        var message = dataset[id_.replace("particle_", "")].message.replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1').trim();
-        if (message == "") {
-            message = "no comments";
+        var message = dataset[id_.xmlID].message.replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1').trim();
+        if (message == "" || message == undefined || message == null ) {
+            message = "there is no comments";
         }
-        D3Renderer.wrapLabel(label, message, 286);
-
-        object.moveToFront();
-        hud.moveToFront();
+        
+        this.HUD(scene, obj, message, translateX, translateY, true);
 
     },
 
@@ -401,16 +395,19 @@ var D3Renderer = {
 
     wrapLabel: function(group_, text_, length_) {
 
+        var MESSAGE_LIMIT = 42; //0: bypassing this feature
+        
         var text = group_.append("text")
             .attr("fill", hudStyle.message)
-            //.attr("stroke", "#FFFFFF")
-            //.attr("stroke-width", 0.075)
             .attr("font-family", hudStyle.typeface)
             .attr("font-size", hudStyle.size)
             .attr("font-weight", hudStyle.weight);
 
-        var words = text_.split(/\s+/).reverse(),
-            word,
+        var words = text_.split(/\s+/).reverse();
+        
+        //limiting option
+        if(words.length > MESSAGE_LIMIT && MESSAGE_LIMIT != 0) { words = words.slice(words.length - MESSAGE_LIMIT); words[0] = "..."; }
+        var word,
             line = [],
             lineNumber = 0,
             lineHeight = hudStyle.spacing,
@@ -418,7 +415,7 @@ var D3Renderer = {
             dy = 0,
 
             tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-        while (word = words.pop()) {
+            while (word = words.pop()) {
 
             line.push(word);
             tspan.text(line.join(" "));

@@ -1,0 +1,17 @@
+TODO LIST
+
+[x] rippling system : feed XML
+[-] rippling system : update node with next element from XML
+[x] tidal system : feed XML
+[-] tidal system : update node with next element from XML
+[-] slowmo mode
+[-] click function 
+
+[-] call update on end_of_showing
+                   end_of_pause
+                   
+                   by now it's 9 sec.
+                   
+    update() could store last nodes positions/colors and do a proper transition
+    
+
