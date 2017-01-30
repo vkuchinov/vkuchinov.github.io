@@ -115,11 +115,10 @@ var tidalSystem = {
     
     update: function(timer_){
         
-        if(timing.phase == 1) { timing.interval = this.exponentialMap(timing.overall, 5000, 1000);  console.log(timing.interval); }
+        if(timing.phase == 1) { timing.interval = this.exponentialMap(timing.overall, 5000, 1000)   ; }
             
         if(timing.passed > timing.interval) { 
            
-        //if(timing.state == 0) { timing.interval == 3000; } else { timing.interval = 50; }
         timing.passed = 0;
                                             
         world.Step(timeStep, velocityIterations, positionIterations);
@@ -182,9 +181,7 @@ var tidalSystem = {
                     distances.push(sqrtDistance({x: Number(positionBuf[(i + offset) * 2]), y: Number(positionBuf[(i + offset) * 2 + 1])}, {x: Number(nearest[j][0].x), y: Number(nearest[j][0].y) }));
                     
                 }
-                
-                 if(Number(positionBuf[(i + offset) * 2]) * SCALE_RATIO + window.innerWidth/2 > 32 &&  Number(positionBuf[(i + offset) * 2]) * SCALE_RATIO + window.innerWidth/2 < window.innerWidth - 32 )  { if(Number(positionBuf[(i + offset) * 2 + 1]) * SCALE_RATIO + window.innerHeight < window.innerHeight - 32) { nodes[i].state = 1; } } else { nodes[i].state = 0; }
-                    
+
                 if(Math.max.apply(null, distances) < REST_DISTANCE) {  
                     
                   return nodes[i].color; 
@@ -246,10 +243,10 @@ var tidalSystem = {
              })
             .attr("r", function(d, i){ return nodes[i].radius; })
             .attr("cx", function(d, i){
-//                if(positionBuf[(i + offset) * 2] * SCALE_RATIO < SCRREN_MARGINS || positionBuf[(i + offset) * 2] * SCALE_RATIO > window.innerWidth - SCRREN_MARGINS) { nodes[i].state = 0; }
+
 				return positionBuf[(i + offset) * 2] * SCALE_RATIO;
 			}).attr("cy", function(d, i){
-//                if(positionBuf[(i + offset) * 2 + 1] * SCALE_RATIO < SCRREN_MARGINS || positionBuf[(i + offset) * 2 + 1] * SCALE_RATIO > window.innerHeight - SCRREN_MARGINS) { nodes[i].state = 0; }
+
 				return positionBuf[(i + offset) * 2 + 1] * SCALE_RATIO;
 			})
             .attr("stroke", "#FFFFFF")
@@ -284,7 +281,7 @@ var tidalSystem = {
             var c = colors[this.findByKey(categories, "id", dataset_[i].category, 0)];
             var f = foam[this.findByKey(categories, "id", dataset_[i].category, 0)];
             
-            nodes.push({"id": i, "xml" : i, "radius": r, "depth" : 0, "color" : c, "foam" : f, "state" : 1});
+            nodes.push({"id": i, "xml" : i, "radius": r, "depth" : 0, "color" : c, "foam" : f, "state" : 0});
         }
         
         console.log("# of particels in this setup: " + nodes.length);
