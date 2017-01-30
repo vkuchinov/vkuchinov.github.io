@@ -23,7 +23,7 @@ var Interface = function() {
   this.wpm = 150;
   this.average = 24;
   this.interval = 8; //Math.floor(60.0 / this.wpm * this.average);
-  this.pause = 6; //by default 6 Math.floor(60.0 / this.wpm * this.average);
+  this.pause = 3; //by default 6 Math.floor(60.0 / this.wpm * this.average);
   this.start = false;
   //this.dynamic = false;
 
@@ -152,7 +152,7 @@ function Timer() {
         this.passed = 0;
         this.state *= -1;
         
-        if(mode == 0) { (this.state == -1) ? system.display(): system.pause(); }
+        if(mode == 0) { (this.state == -1) ? system.pause(): system.display(); }
             
         } else {
         

@@ -26,7 +26,9 @@
 "use strict"
 var SCALE_RATIO = 150;
 var TIME_RATE = 0.0165; // 1/60
-var ZERO;
+
+///phase: 0: displaying, 1: pausing
+var timing = { interval: 3000, overal: 0, passed: 0, phase: 0 };
 
 var NUM_OF_NEIGHBOURS = 8;
 var REST_DISTANCE = 0.132;
@@ -34,14 +36,14 @@ var PARTICLE_SIZE = 0.05; //for simulatio
 
 var GROUND_OFFSET = 32;
 var SCRREN_MARGINS = 64;
-
-var experimental = 0;
+var zero;
 
 //wave machine parameters
-var machine;
 var MAX_ANGLE = 0.6;
+var ANG_INC = 0.0038;
+
+var machine;
 var ang = 0.0;
-var ang_inc = 0.0038;
 var timeStep = TIME_RATE, velocityIterations = 8, positionIterations = 3;
 var globalPos, globalAngle;
 
@@ -58,7 +60,7 @@ var tidalSystem = {
     
     inits : function(dataset_){
 
-        ZERO = window.innerHeight;
+        zero = window.innerHeight;
         
         //translate group
         particles.attr("transform", "translate(" + width / 2 + ", " + (height + GROUND_OFFSET) + ")");
@@ -113,8 +115,13 @@ var tidalSystem = {
     
     update: function(timer_){
         
-        if(experimental % 30 == 0){
-
+        if(timing.phase == 1) { timing.interval = this.exponentialMap(timing.overall, 5000, 1000);  console.log(timing.interval); }
+            
+        if(timing.passed > timing.interval) { 
+           
+        //if(timing.state == 0) { timing.interval == 3000; } else { timing.interval = 50; }
+        timing.passed = 0;
+                                            
         world.Step(timeStep, velocityIterations, positionIterations);
         machine.time += TIME_RATE;
         machine.joint.SetMotorSpeed(0.05 * Math.cos(machine.time) * Math.PI);
@@ -122,12 +129,12 @@ var tidalSystem = {
         var body = world.bodies[0];
         body.SetTransform(body.GetWorldCenter(), ang);
 
-        if(ang > 0.35 || ang < -0.35) {  ang_inc *= -1; }
-        ang += ang_inc;
+        if(ang > 0.35 || ang < -0.35) {  ANG_INC *= -1; }
+        ang += ANG_INC;
         
         //adjusting the sun
         globalPos = worldBody.GetPosition();
-        //globalPos.y += window.innerHeight - ZERO;
+        //globalPos.y += window.innerHeight - zero;
         globalAngle = worldBody.GetAngle() * 180 / Math.PI;
               
         var system = world.particleSystems[0];
@@ -176,6 +183,8 @@ var tidalSystem = {
                     
                 }
                 
+                 if(Number(positionBuf[(i + offset) * 2]) * SCALE_RATIO + window.innerWidth/2 > 32 &&  Number(positionBuf[(i + offset) * 2]) * SCALE_RATIO + window.innerWidth/2 < window.innerWidth - 32 )  { if(Number(positionBuf[(i + offset) * 2 + 1]) * SCALE_RATIO + window.innerHeight < window.innerHeight - 32) { nodes[i].state = 1; } } else { nodes[i].state = 0; }
+                    
                 if(Math.max.apply(null, distances) < REST_DISTANCE) {  
                     
                   return nodes[i].color; 
@@ -187,6 +196,8 @@ var tidalSystem = {
                     return nodes[i].foam; 
                     
                 }
+                
+                
                         
              })
             .attr("r", function(d, i){ return nodes[i].radius; })
@@ -217,7 +228,9 @@ var tidalSystem = {
                     distances.push(sqrtDistance({x: Number(positionBuf[(i + offset) * 2]), y: Number(positionBuf[(i + offset) * 2 + 1])}, {x: Number(nearest[j][0].x), y: Number(nearest[j][0].y) }));
                     
                 }
-                
+                    
+                if(Number(positionBuf[(i + offset) * 2]) * SCALE_RATIO + window.innerWidth/2 > 32 &&  Number(positionBuf[(i + offset) * 2]) * SCALE_RATIO + window.innerWidth/2 < window.innerWidth - 32 )  { if(Number(positionBuf[(i + offset) * 2 + 1]) * SCALE_RATIO + window.innerHeight < window.innerHeight - 32) { nodes[i].state = 1; } } else { nodes[i].state = 0; }
+                    
                 if(Math.max.apply(null, distances) < REST_DISTANCE) {  
                     
                   return nodes[i].color; 
@@ -249,10 +262,12 @@ var tidalSystem = {
         particleGroup.attr("transform", "translate(" + globalPos.x + ", " + globalPos.y + "), rotate(" + (-globalAngle) + ")");
  
 		particleGroup.exit().remove();
+            
+        }
         
-    }
-        experimental++;
-
+        timing.passed += timer_.getInterval();
+        timing.overall += timer_.getInterval();
+        
 	},
     
     feed : function(system_, dataset_){
@@ -279,6 +294,8 @@ var tidalSystem = {
         
     display : function() {
         
+        timing.phase = 0; timing.interval = 10000; timing.overall = 0;
+        
         ///returns composite object {nodeID: n, xmlID: n}
         var index = this.findLowestIDByKey(nodes, "state", 1);
     
@@ -292,16 +309,14 @@ var tidalSystem = {
 
     pause : function(){
         
+        timing.phase = 1; timing.interval = 25; timing.overall = 0;
+        
         d3.select("#HUD").attr("opacity", 1.0)
         .transition()
         .duration(1000)
         .attr("opacity", 0.0)
         .each("end", function(d) { this.remove(); });
-        
-        //hide HUD, clear its circle
-        
-        //all nodes to next update
-        
+    
     },
     
     takeover: function(index_, data_){
@@ -340,6 +355,17 @@ var tidalSystem = {
         
         return min2_ + (value_ - min1_) / (max1_ - min1_) * (max2_ - min2_); 
     
+    },
+    
+    exponentialMap: function(value_, interval0_, interval1_){
+        
+        //value_ should be from 0.0 to 1.0
+        
+        var b = 9.0; //coefficient
+        var t = this.map(Math.min(value_, interval0_), 0.0, interval0_, 0.0, 1.0);
+        var i = Math.exp(t * b);
+        return this.map(i, 1.0, Math.exp(1.0 * b), 0.0, interval1_);
+        
     },
 
     findByKey: function(array_, key_, value_, default_) {
