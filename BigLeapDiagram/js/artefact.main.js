@@ -45,7 +45,7 @@
 *
 */
 
-var colors = ["#BEC831", "#E8C357", "#C6FFC1", "#FF8F86", "#CABEE8", "#9BFFF7", "#A7A7A2", "#1CABEE"];
+var colors = ["#BEC831", "#A7A7A2", "#C6FFC1", "#FF8F86", "#CABEE8", "#9BFFF7", "#E8C357" , "#1CABEE"];
 var scene;
 var segments = [];
 var regions = [];
@@ -268,11 +268,11 @@ function getDescription(data_){
     
         if(additional.length == 0) { 
             
-            if(data_.top.length == 0){ return "doesn't have <font color='#A7A7A2'>any top cities</font>."; }
-            else if(data_.top.length == 1) { return "has <font color='#A7A7A2'>only one top city</font>—" + data_.top[0].name + " (" + data_.top[0].code.substr(data_.top[0].code.indexOf("#")) + ")."; }
+            if(data_.top.length == 0){ return "doesn't have <font color='#E8C357'>any top cities</font>."; }
+            else if(data_.top.length == 1) { return "has <font color='#E8C357'>only one top city</font>—" + data_.top[0].name + " (" + data_.top[0].code.substr(data_.top[0].code.indexOf("#")) + ")."; }
             else{
                 
-                var s = "has <font color='#A7A7A2'>" + data_.top.length + " top cities</font>—";
+                var s = "has <font color='#E8C357'>" + data_.top.length + " top cities</font>—";
                 
                 for(var j = 0; j < data_.top.length - 1; j++){
                 s += data_.top[j].name + " (" + data_.top[j].code.substr(data_.top[j].code.indexOf("#")) + "), ";  
@@ -282,9 +282,9 @@ function getDescription(data_){
             }}
             else{
             if(data_.top.length == 0) { return "has " + additional.substr(0, additional.length - 2) + "."; }
-            else if(data_.top.length == 1) { return "has " + additional.substr(0, additional.length - 2) + " and <font color='#A7A7A2'>only one top city</font>—" + data_.top[0].name + " (" + data_.top[0].code.substr(data_.top[0].code.indexOf("#")) + ")."; }
+            else if(data_.top.length == 1) { return "has " + additional.substr(0, additional.length - 2) + " and <font color='#E8C357'>only one top city</font>—" + data_.top[0].name + " (" + data_.top[0].code.substr(data_.top[0].code.indexOf("#")) + ")."; }
             else{
-            var s = "<font color='#A7A7A2'>" + data_.top.length + " top cities</font>—";
+            var s = "<font color='#E8C357'>" + data_.top.length + " top cities</font>—";
                 
                 for(var j = 0; j < data_.top.length - 1; j++){
                 s += data_.top[j].name + " (" + data_.top[j].code.substr(data_.top[j].code.indexOf("#")) + "), ";  
