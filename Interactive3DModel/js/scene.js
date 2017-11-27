@@ -74,7 +74,7 @@ function getCoordinates(object_, camera_) {
     return { x: posx, y: posy };
 }
 
-var hudBitmap, hudTexture, cameraHUD;
+var hudCanvas, hudBitmap, hudTexture, cameraHUD;
 var container;
 
 var modelScale = 0.125;
@@ -139,7 +139,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 				model.getObjectByName( 'targetPoint', true ).visible = false;
                 
                 //anchors
-                model.getObjectByName( 'AnchorA', true ).visible = false;
+                model.getObjectByName( 'AnchorA', true ).visible = true;
                 
 				scene.add( model );
 
@@ -155,7 +155,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
                 
 				stats = new Stats();
 
-                var hudCanvas = document.createElement('canvas');
+                hudCanvas = document.createElement('canvas');
   
                 hudCanvas.width =  window.innerWidth;
                 hudCanvas.height =  window.innerHeight;
@@ -200,11 +200,21 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
             window.addEventListener( 'resize', onWindowResize, false );
 			}
 			function onWindowResize() {
+                
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
+                
 				renderer.setSize( window.innerWidth, window.innerHeight );
+
+                hudCanvas.width =  window.innerWidth;
+                hudCanvas.height =  window.innerHeight;
+                hudBitmap = hudCanvas.getContext('2d');
+                
+                setHighPPI(hudCanvas);
+                
 			}
 			function start() {
+                
 				for ( var i = 0; i < kfAnimationsLength; ++i ) {
 					var animation = kfAnimations[i];
 					for ( var h = 0, hl = animation.hierarchy.length; h < hl; h++ ) {
@@ -226,21 +236,21 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 					}
 					animation.loop = false;
 					animation.play();
+                    
 				}
 			}
+
 			function animate( timestamp ) {
 
                  var object = model.getObjectByName( 'AnchorA', true );
                  var xy = getCoordinates(object, camera);
-
-                
                                
                  var hor = 1;
                  var ver = 1;
                 
                  if(xy.x < window.innerWidth / 2) hor = -1;
                  if(xy.y < window.innerHeight / 2) ver = -1;
-                 //console.log(window.innerWidth);
+    
                  hudBitmap.clearRect(0, 0,  window.innerWidth,  window.innerHeight);
                 
                  hudBitmap.beginPath();
@@ -254,15 +264,11 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
                  hudBitmap.lineTo(xy.x + 192 * hor, xy.y - 32  * ver);
                  hudBitmap.lineWidth = 2;
                  hudBitmap.stroke();
-                
-                 //hudBitmap.lineWidth = 5;
-                 //hudBitmap.strokeStyle = '#FFFFFF49';
-                 //hudBitmap.stroke();
+  
                  if(hor == 1 ) { hudBitmap.textAlign = 'right'; } else { hudBitmap.textAlign = 'left'; };
                  hudBitmap.fillText("Easy-to-read display", xy.x + 192 * hor, xy.y - 32 * ver - 6);
   	             hudTexture.needsUpdate = true;
 
-                //number of keyframes
 				var frameTime = ( timestamp - lastTimestamp ) * 0.002;
 				if ( progress >= 0 && progress < 36 ) {
 					for ( var i = 0; i < kfAnimationsLength; ++i ) {
