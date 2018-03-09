@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>D3.JS: Force Algorithm Example 1</title>
+<title>D3.JS: Force Algorithm Example 3</title>
 <script src="d3.v4.min.js"></script>
 <style>
     body {
@@ -23,6 +23,23 @@
 <body>
 
     <script>
+        var colors = [
+
+            {
+                type: "Device",
+                hex: "#FC7066"
+            },
+            {
+                type: "Interface",
+                hex: "#DC8BF7"
+            },
+            {
+                type: "Link",
+                hex: "#FBD06A"
+            }
+
+        ];
+
         var w = 256,
             h = 256,
             simulation;
@@ -50,7 +67,6 @@
 
             if (error) throw error;
 
-
             var counter = 0;
 
             graph.paths.forEach(function(d) {
@@ -62,12 +78,12 @@
                             index: counter,
                             name: k.nodeId,
                             x: k.geo.geometry.coordinates[0],
-                            y: k.geo.geometry.coordinates[1]
+                            y: k.geo.geometry.coordinates[1],
+                            type: k.nodeType
                         });
                         counter++;
 
                     }
-
 
                 });
 
@@ -133,6 +149,9 @@
                         return d.y;
                     })
                     .attr("r", 6)
+                    .attr("fill", function(d) {
+                        return colors.filter(e => e.type === d.type)[0].hex;
+                    })
                     .on("mouseover", function(d) {
 
                         div.transition()
