@@ -1,0 +1,1025 @@
+{
+    "num_of_path": 10,
+    "paths": [
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001::INDRARNYPAR002",
+                    "nodeType": "Tunnel",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                335,
+                                776
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INDRSHTLESR001::INDRARNYPAR002",
+                        "state": "Null",
+                        "type": "MPLS"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "DDDDD",
+                    "nodeType": "Path",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                636,
+                                876
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "DDDDD",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001::INDRARNYPAR002",
+                    "relType": "TNL_FROM",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001::INDRARNYPAR002",
+                    "layers": 2,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                },
+                {
+                    "relId": "INDRSHTLESR001::INDRARNYPAR002:DDDDD",
+                    "relType": "HAS_PATH",
+                    "sourceNodeId": "INDRSHTLESR001::INDRARNYPAR002",
+                    "targetNodeId": "DDDDD",
+                    "layers": 2,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001::INDRARNYPAR002",
+                    "nodeType": "Tunnel",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                335,
+                                776
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INDRSHTLESR001::INDRARNYPAR002",
+                        "state": "Null",
+                        "type": "MPLS"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRARNYPAR002",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                313,
+                                319
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "PAR",
+                        "latitude": "22.75948",
+                        "name": "INDRARNYPAR002",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.89759"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001::INDRARNYPAR002",
+                    "relType": "TNL_FROM",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001::INDRARNYPAR002",
+                    "layers": 2,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                },
+                {
+                    "relId": "INDRARNYPAR002:INDRSHTLESR001::INDRARNYPAR002",
+                    "relType": "TNL_TO",
+                    "sourceNodeId": "INDRARNYPAR002",
+                    "targetNodeId": "INDRSHTLESR001::INDRARNYPAR002",
+                    "layers": 2,
+                    "attrs": {
+                        "role": "PAR"
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001-access950",
+                    "nodeType": "CPInstance",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                563,
+                                69
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INDRSHTLESR001-access950",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "ISIS-Level-2-950",
+                    "nodeType": "Domain",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                608,
+                                500
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "domain_type": "IGPArea",
+                        "name": "ISIS-Level-2-950",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001-access950",
+                    "relType": "HAS_CP_INSTANCE",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001-access950",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "INDRSHTLESR001-access950:ISIS-Level-2-950",
+                    "relType": "BELONGS_TO_DOMAIN",
+                    "sourceNodeId": "INDRSHTLESR001-access950",
+                    "targetNodeId": "ISIS-Level-2-950",
+                    "layers": 2,
+                    "attrs": {
+                        "border": false
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001:INDRSHTLBBU001",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                674,
+                                370
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "subnet": "",
+                        "ipv4_addr": "",
+                        "domain": "ISIS-Level-2-950",
+                        "name": "INDRSHTLESR001:INDRSHTLBBU001",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLBBU001:INDRSHTLESR001::INDRSHTLESR001:INDRSHTLBBU001",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                180,
+                                386
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INDRSHTLBBU001:INDRSHTLESR001::INDRSHTLESR001:INDRSHTLBBU001",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001:INDRSHTLBBU001",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001:INDRSHTLBBU001",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                },
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLBBU001:INDRSHTLBBU001:INDRSHTLESR001::INDRSHTLESR001:INDRSHTLBBU001",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "INDRSHTLESR001:INDRSHTLBBU001",
+                    "targetNodeId": "INDRSHTLBBU001:INDRSHTLESR001::INDRSHTLESR001:INDRSHTLBBU001",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001:BD354",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                529,
+                                28
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "subnet": "172.18.206.120/31",
+                        "ipv4_addr": "172.18.206.120",
+                        "domain": "ISIS-Level-2-950",
+                        "name": "INDRSHTLESR001:BD354",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRHIGCESR001:BD355::INDRSHTLESR001:BD354",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                329,
+                                903
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INDRHIGCESR001:BD355::INDRSHTLESR001:BD354",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001:BD354",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001:BD354",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                },
+                {
+                    "relId": "INDRSHTLESR001:BD354:INDRHIGCESR001:BD355::INDRSHTLESR001:BD354",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "INDRSHTLESR001:BD354",
+                    "targetNodeId": "INDRHIGCESR001:BD355::INDRSHTLESR001:BD354",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001:BD355",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                771,
+                                786
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "subnet": "172.18.206.118/31",
+                        "ipv4_addr": "172.18.206.119",
+                        "domain": "ISIS-Level-2-950",
+                        "name": "INDRSHTLESR001:BD355",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "DDDDD",
+                    "nodeType": "Path",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                636,
+                                876
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "DDDDD",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001:BD355",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001:BD355",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                },
+                {
+                    "relId": "INDRSHTLESR001:BD355:DDDDD",
+                    "relType": "IN_PATH",
+                    "sourceNodeId": "INDRSHTLESR001:BD355",
+                    "targetNodeId": "DDDDD",
+                    "layers": 2,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRSHTLESR001:BD355",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                771,
+                                786
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "subnet": "172.18.206.118/31",
+                        "ipv4_addr": "172.18.206.119",
+                        "domain": "ISIS-Level-2-950",
+                        "name": "INDRSHTLESR001:BD355",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INDRARNYPAR002:BD351::INDRSHTLESR001:BD355",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                744,
+                                6
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INDRARNYPAR002:BD351::INDRSHTLESR001:BD355",
+                        "state": "Null"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INDRSHTLESR001:BD355",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INDRSHTLESR001:BD355",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                },
+                {
+                    "relId": "INDRSHTLESR001:BD355:INDRARNYPAR002:BD351::INDRSHTLESR001:BD355",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "INDRSHTLESR001:BD355",
+                    "targetNodeId": "INDRARNYPAR002:BD351::INDRSHTLESR001:BD355",
+                    "layers": 0,
+                    "attrs": {
+                        "role": "ESR"
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INMP",
+                    "nodeType": "Group",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                25,
+                                225
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INMP",
+                        "state": "Null",
+                        "type": "Region"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "BHPLSHPRSAE009",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                181,
+                                868
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "SAE",
+                        "latitude": "23.182625",
+                        "name": "BHPLSHPRSAE009",
+                        "layers": [
+                            "IP",
+                            "LTE"
+                        ],
+                        "state": "Null",
+                        "longitude": "77.456153"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INMP",
+                    "relType": "BELONGS_TO_GROUP",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INMP",
+                    "layers": 2,
+                    "attrs": {}
+                },
+                {
+                    "relId": "BHPLSHPRSAE009:INMP",
+                    "relType": "BELONGS_TO_GROUP",
+                    "sourceNodeId": "BHPLSHPRSAE009",
+                    "targetNodeId": "INMP",
+                    "layers": 2,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INMP",
+                    "nodeType": "Group",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                25,
+                                225
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INMP",
+                        "state": "Null",
+                        "type": "Region"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "BHPLSHPRSAE008",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                699,
+                                937
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "SAE",
+                        "latitude": "23.182625",
+                        "name": "BHPLSHPRSAE008",
+                        "layers": [
+                            "IP",
+                            "LTE"
+                        ],
+                        "state": "Null",
+                        "longitude": "77.456153"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INMP",
+                    "relType": "BELONGS_TO_GROUP",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INMP",
+                    "layers": 2,
+                    "attrs": {}
+                },
+                {
+                    "relId": "BHPLSHPRSAE008:INMP",
+                    "relType": "BELONGS_TO_GROUP",
+                    "sourceNodeId": "BHPLSHPRSAE008",
+                    "targetNodeId": "INMP",
+                    "layers": 2,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "INDRSHTLESR001",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                286,
+                                152
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "ESR",
+                        "latitude": "22.753472",
+                        "name": "INDRSHTLESR001",
+                        "layers": [
+                            "IP",
+                            "Tunnel_Layer1"
+                        ],
+                        "state": "Null",
+                        "longitude": "75.902222"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "INMP",
+                    "nodeType": "Group",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                25,
+                                225
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "INMP",
+                        "state": "Null",
+                        "type": "Region"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "BHPLSHPRSAE007",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                463,
+                                116
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "role": "SAE",
+                        "latitude": "23.182625",
+                        "name": "BHPLSHPRSAE007",
+                        "layers": [
+                            "IP",
+                            "LTE"
+                        ],
+                        "state": "Null",
+                        "longitude": "77.456153"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "INDRSHTLESR001:INMP",
+                    "relType": "BELONGS_TO_GROUP",
+                    "sourceNodeId": "INDRSHTLESR001",
+                    "targetNodeId": "INMP",
+                    "layers": 2,
+                    "attrs": {}
+                },
+                {
+                    "relId": "BHPLSHPRSAE007:INMP",
+                    "relType": "BELONGS_TO_GROUP",
+                    "sourceNodeId": "BHPLSHPRSAE007",
+                    "targetNodeId": "INMP",
+                    "layers": 2,
+                    "attrs": {}
+                }
+            ]
+        }
+    ],
+    "error": null,
+    "crs": "Linear"
+}

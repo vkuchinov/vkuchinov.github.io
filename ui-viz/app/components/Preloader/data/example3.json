@@ -1,0 +1,2027 @@
+{
+    "num_of_path": 12,
+    "paths": [
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:ac12:8:::9223372036854775807",
+                        "mgmt_ipv4": "ac12:8::",
+                        "from": 1518046012932,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:ac12:8:::9223372036854775807",
+                        "mgmt_ipv4": "ac12:8::",
+                        "from": 1518046012932,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807"
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                387,
+                                262
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                139,
+                                128
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.1",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                998,
+                                891
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:23:24:9223372036854775807"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                189,
+                                185
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:172.18.0.7:387:9223372036854775807",
+                        "subnet": "192.1.1.0/30",
+                        "role": "fabric",
+                        "ipv4_addr": "192.1.1.0",
+                        "type": "Ethernet"
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:172.18.0.7:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                891,
+                                267
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "namespace": "prod",
+                        "name": "prod:172.18.0.7:9223372036854775807",
+                        "mgmt_ipv4": "172.18.0.7",
+                        "from": 1516637277881,
+                        "to": 9223372036854775807
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807:prod:ac12:8:::9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:23:24:9223372036854775807:prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "targetNodeId": "prod:ac12:8:::9223372036854775807:395:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:387:9223372036854775807:prod:172.18.0.7:23:24:9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:23:24:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                },
+                {
+                    "relId": "prod:172.18.0.7:9223372036854775807:prod:172.18.0.7:387:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:172.18.0.7:9223372036854775807",
+                    "targetNodeId": "prod:172.18.0.7:387:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {}
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:192.168.1.152:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                318,
+                                866
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.152",
+                        "device_id": "\"08 00 27 2B 12 4A \"",
+                        "name": "prod:192.168.1.152:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520297405967,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.152:1:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                415,
+                                475
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.252",
+                        "ipv4_addr": "10.1.1.2",
+                        "port_num": 1,
+                        "if_name": "\"Ethernet1\"",
+                        "namespace": "prod:192.168.1.152",
+                        "name": "prod:192.168.1.152:1:9223372036854775807",
+                        "port_id": "\"Ethernet1\"",
+                        "from": 1520297405977,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 1
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                84,
+                                997
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520302015544,
+                        "to": 9223372036854775807,
+                        "link_id": "\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\""
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.150:1:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                638,
+                                588
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.252",
+                        "ipv4_addr": "10.1.1.1",
+                        "if_name": "\"Ethernet1\"",
+                        "port_num": 1,
+                        "namespace": "prod:192.168.1.150",
+                        "name": "prod:192.168.1.150:1:9223372036854775807",
+                        "port_id": "\"Ethernet1\"",
+                        "from": 1520294345134,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 1
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.150:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                710,
+                                269
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.150",
+                        "device_id": "\"08 00 27 15 A2 0C \"",
+                        "name": "prod:192.168.1.150:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520293364270,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:192.168.1.152:9223372036854775807:prod:192.168.1.152:1:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.152:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.152:1:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520297405998,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.152:1:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.152:1:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302015544,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.150:1:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.150:1:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302015544,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.150:9223372036854775807:prod:192.168.1.150:1:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.150:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.150:1:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520294345238,
+                        "to": 9223372036854775807
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:192.168.1.150:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                710,
+                                269
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.150",
+                        "device_id": "\"08 00 27 15 A2 0C \"",
+                        "name": "prod:192.168.1.150:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520293364270,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.150:1:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                638,
+                                588
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.252",
+                        "ipv4_addr": "10.1.1.1",
+                        "if_name": "\"Ethernet1\"",
+                        "port_num": 1,
+                        "namespace": "prod:192.168.1.150",
+                        "name": "prod:192.168.1.150:1:9223372036854775807",
+                        "port_id": "\"Ethernet1\"",
+                        "from": 1520294345134,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 1
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                84,
+                                997
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520302015544,
+                        "to": 9223372036854775807,
+                        "link_id": "\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\""
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.152:1:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                415,
+                                475
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.252",
+                        "ipv4_addr": "10.1.1.2",
+                        "port_num": 1,
+                        "if_name": "\"Ethernet1\"",
+                        "namespace": "prod:192.168.1.152",
+                        "name": "prod:192.168.1.152:1:9223372036854775807",
+                        "port_id": "\"Ethernet1\"",
+                        "from": 1520297405977,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 1
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.152:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                318,
+                                866
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.152",
+                        "device_id": "\"08 00 27 2B 12 4A \"",
+                        "name": "prod:192.168.1.152:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520297405967,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:192.168.1.150:9223372036854775807:prod:192.168.1.150:1:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.150:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.150:1:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520294345238,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.150:1:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.150:1:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302015544,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.152:1:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.152:1:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Ethernet1\":\"08 00 27 2B 12 4A \":\"Ethernet1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302015544,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.152:9223372036854775807:prod:192.168.1.152:1:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.152:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.152:1:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520297405998,
+                        "to": 9223372036854775807
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:192.168.1.150:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                710,
+                                269
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.150",
+                        "device_id": "\"08 00 27 15 A2 0C \"",
+                        "name": "prod:192.168.1.150:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520293364270,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.150:999001:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                141,
+                                342
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.0",
+                        "ipv4_addr": "192.168.1.150",
+                        "if_name": "\"Management1\"",
+                        "port_num": 97,
+                        "namespace": "prod:192.168.1.150",
+                        "name": "prod:192.168.1.150:999001:9223372036854775807",
+                        "port_id": "\"Management1\"",
+                        "from": 1520294345676,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 999001
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                284,
+                                456
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520302016441,
+                        "to": 9223372036854775807,
+                        "link_id": "\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\""
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.152:999001:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                166,
+                                361
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.0",
+                        "ipv4_addr": "192.168.1.152",
+                        "port_num": 97,
+                        "if_name": "\"Management1\"",
+                        "namespace": "prod:192.168.1.152",
+                        "name": "prod:192.168.1.152:999001:9223372036854775807",
+                        "port_id": "\"Management1\"",
+                        "from": 1520297406079,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 999001
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.152:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                318,
+                                866
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.152",
+                        "device_id": "\"08 00 27 2B 12 4A \"",
+                        "name": "prod:192.168.1.152:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520297405967,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:192.168.1.150:9223372036854775807:prod:192.168.1.150:999001:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.150:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.150:999001:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520294345693,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.150:999001:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.150:999001:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302016441,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.152:999001:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.152:999001:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302016441,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.152:9223372036854775807:prod:192.168.1.152:999001:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.152:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.152:999001:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520297406169,
+                        "to": 9223372036854775807
+                    }
+                }
+            ]
+        },
+        {
+            "nodes": [
+                {
+                    "nodeId": "prod:192.168.1.152:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                318,
+                                866
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.152",
+                        "device_id": "\"08 00 27 2B 12 4A \"",
+                        "name": "prod:192.168.1.152:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520297405967,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.152:999001:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                166,
+                                361
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.0",
+                        "ipv4_addr": "192.168.1.152",
+                        "port_num": 97,
+                        "if_name": "\"Management1\"",
+                        "namespace": "prod:192.168.1.152",
+                        "name": "prod:192.168.1.152:999001:9223372036854775807",
+                        "port_id": "\"Management1\"",
+                        "from": 1520297406079,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 999001
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "nodeType": "Link",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                284,
+                                456
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "name": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520302016441,
+                        "to": 9223372036854775807,
+                        "link_id": "\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\""
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.150:999001:9223372036854775807",
+                    "nodeType": "Interface",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                141,
+                                342
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "iana_iftype": 6,
+                        "subnet": "255.255.255.0",
+                        "ipv4_addr": "192.168.1.150",
+                        "if_name": "\"Management1\"",
+                        "port_num": 97,
+                        "namespace": "prod:192.168.1.150",
+                        "name": "prod:192.168.1.150:999001:9223372036854775807",
+                        "port_id": "\"Management1\"",
+                        "from": 1520294345676,
+                        "to": 9223372036854775807,
+                        "type": "ETHERNET",
+                        "if_index": 999001
+                    },
+                    "alarm": {}
+                },
+                {
+                    "nodeId": "prod:192.168.1.150:9223372036854775807",
+                    "nodeType": "Device",
+                    "geo": {
+                        "type": "Point",
+                        "crs": "Linear",
+                        "geometry": {
+                            "coordinates": [
+                                710,
+                                269
+                            ]
+                        },
+                        "properties": null
+                    },
+                    "groups": null,
+                    "layers": [],
+                    "attrs": {
+                        "mgmt_ipv4": "192.168.1.150",
+                        "device_id": "\"08 00 27 15 A2 0C \"",
+                        "name": "prod:192.168.1.150:9223372036854775807",
+                        "namespace": "prod",
+                        "from": 1520293364270,
+                        "to": 9223372036854775807,
+                        "device_id_type": 4
+                    },
+                    "alarm": {}
+                }
+            ],
+            "rels": [
+                {
+                    "relId": "prod:192.168.1.152:9223372036854775807:prod:192.168.1.152:999001:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.152:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.152:999001:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520297406169,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.152:999001:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.152:999001:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302016441,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.150:999001:9223372036854775807:prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "relType": "ON_LINK",
+                    "sourceNodeId": "prod:192.168.1.150:999001:9223372036854775807",
+                    "targetNodeId": "prod:\"08 00 27 15 A2 0C \":\"Management1\":\"08 00 27 2B 12 4A \":\"Management1\":9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520302016441,
+                        "to": 9223372036854775807
+                    }
+                },
+                {
+                    "relId": "prod:192.168.1.150:9223372036854775807:prod:192.168.1.150:999001:9223372036854775807",
+                    "relType": "HOSTED_INTF",
+                    "sourceNodeId": "prod:192.168.1.150:9223372036854775807",
+                    "targetNodeId": "prod:192.168.1.150:999001:9223372036854775807",
+                    "layers": 0,
+                    "attrs": {
+                        "from": 1520294345693,
+                        "to": 9223372036854775807
+                    }
+                }
+            ]
+        }
+    ],
+    "error": null,
+    "crs": "Linear"
+}
