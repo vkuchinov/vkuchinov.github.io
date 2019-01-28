@@ -105,7 +105,7 @@
             colors.push.apply(colors, randomRGB());
             enabled.push(1);
             
-            var indx = new THREE.Color().setHex(i + 1);
+            var indx = new THREE.Color().setHex((i + 1));
             id.push(indx.r, indx.g, indx.b);
 
         }
@@ -186,9 +186,9 @@
             if(id < N){
                 
                 last_id = id;
-                console.log("highlighted node: " + last_id);
+                console.log("highlighted node: " + id);
                 
-                for(var i = 0; i < N; i++){ if(i != (id - 1)) { enabled[i] = 0.0; } }
+                for(var i = 0; i < N; i++){ if(i != (id)) { enabled[i] = 0.0; } }
                 points.geometry.attributes.enabled.needsUpdate = true;
             
                 
