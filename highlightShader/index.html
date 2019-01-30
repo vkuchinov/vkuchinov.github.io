@@ -47,7 +47,7 @@
     
         vColor = color;
         
-        if (length(position - closestPointToPoint()) < rad) if(enabled == 1.) { vColor = id; }
+        if (length(position - closestPointToPoint()) < rad) if(enabled > .5) { vColor = id; }
         
         vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
         gl_PointSize = size * ( scale / -mvPosition.z );
