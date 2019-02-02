@@ -86,6 +86,7 @@
         camera.position.set(0, 0, 10);
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xEEEEEE, 1.0);
         document.body.appendChild(renderer.domElement);
 
@@ -156,7 +157,7 @@
         var ray = new THREE.Ray();
 
         pickingScene = new THREE.Scene();
-        pickingTexture = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+        pickingTexture = new THREE.WebGLRenderTarget(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
         pickingTexture.texture.minFilter = THREE.LinearFilter;
         pickingScene.add(points.clone());
 
@@ -180,7 +181,7 @@
             renderer.render(pickingScene, camera, pickingTexture);
             var pixelBuffer = new Uint8Array(4);
             renderer.readRenderTargetPixels(
-            pickingTexture, event.clientX, pickingTexture.height - event.clientY,
+            pickingTexture, event.clientX * window.devicePixelRatio, pickingTexture.height - event.clientY * window.devicePixelRatio,
             1, 1, pixelBuffer);
    
              
