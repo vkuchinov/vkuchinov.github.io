@@ -86,6 +86,7 @@
         camera.position.set(0, 0, 10);
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xEEEEEE, 1.0);
         document.body.appendChild(renderer.domElement);
 
@@ -136,6 +137,7 @@
             },
             vertexShader: document.getElementById('vertexShader').textContent,
             fragmentShader: document.getElementById('fragmentShader').textContent,
+            depthTest : true,
             alphaTest: 0.9
 
 
@@ -155,13 +157,15 @@
         var ray = new THREE.Ray();
 
         pickingScene = new THREE.Scene();
-        pickingTexture = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+        pickingTexture = new THREE.WebGLRenderTarget(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
         pickingTexture.texture.minFilter = THREE.LinearFilter;
         pickingScene.add(points.clone());
 
         renderer.domElement.addEventListener("mousemove", onMouseMove, false);
 
         function onMouseMove(event) {
+            
+            camera.clearViewOffset();
             
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -177,7 +181,7 @@
             renderer.render(pickingScene, camera, pickingTexture);
             var pixelBuffer = new Uint8Array(4);
             renderer.readRenderTargetPixels(
-            pickingTexture, event.clientX, pickingTexture.height - event.clientY,
+            pickingTexture, event.clientX * window.devicePixelRatio, pickingTexture.height - event.clientY * window.devicePixelRatio,
             1, 1, pixelBuffer);
    
              
