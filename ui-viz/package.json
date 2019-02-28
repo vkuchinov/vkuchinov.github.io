@@ -252,6 +252,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "lodash": ">=4.17.11",
     "add-asset-html-webpack-plugin": "2.0.1",
     "babel-cli": "6.24.1",
     "babel-core": "6.24.1",
