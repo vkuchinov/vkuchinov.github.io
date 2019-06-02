@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+	<head>
+		<title>three.js template</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+        <style> body{ margin: 0px; } </style>
+		<script src="js/three.min.js"></script>
+        
+        <script type="x-shader/x-vertex" id="vertexshader">
+
+    uniform vec3 parentPosition;
+    uniform float rotation;
+    varying vec4 vColor;
+    varying mat4 vPosition;
+    
+    vec3 rotateVectorByQuaternion( vec3 v, vec4 q ) {
+
+				vec3 dest = vec3( 0.0 );
+
+				float x = v.x, y  = v.y, z  = v.z;
+				float qx = q.x, qy = q.y, qz = q.z, qw = q.w;
+
+				// calculate quaternion * vector
+
+				float ix =  qw * x + qy * z - qz * y,
+					  iy =  qw * y + qz * x - qx * z,
+					  iz =  qw * z + qx * y - qy * x,
+					  iw = -qx * x - qy * y - qz * z;
+
+				// calculate result * inverse quaternion
+
+				dest.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+				dest.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+				dest.z = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+
+				return dest;
+
+			}
+
+			vec4 axisAngleToQuaternion( vec3 axis, float angle ) {
+
+				vec4 dest = vec4( 0.0 );
+
+				float halfAngle = angle / 2.0,
+					  s = sin( halfAngle );
+
+				dest.x = axis.x * s;
+				dest.y = axis.y * s;
+				dest.z = axis.z * s;
+				dest.w = cos( halfAngle );
+
+				return dest;
+
+			}
+            
+    
+    void main() {
+    
+        vec4 rotationXYZ = vec4( 0.0, 1.0, 0.0, rotation);
+        vec4 qRotation = axisAngleToQuaternion( rotationXYZ.xyz, rotationXYZ.w );
+        vec3 newPosition = rotateVectorByQuaternion( position, qRotation );
+
+        vColor = vec4(1.0, 0.0, 1.0, 1.0);
+        vec4 mvPosition = modelViewMatrix * vec4( newPosition, 1.0 );
+        gl_PointSize = 32.0 * ( 300.0 / -mvPosition.z );
+        gl_Position = projectionMatrix * mvPosition;
+        
+    }
+    
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+
+    uniform sampler2D texture;
+    varying vec4 vColor;
+    varying mat4 vPosition;
+    
+    void main() {
+
+        gl_FragColor = vColor;
+        gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+    
+    }
+    
+</script>
+        
+        
+	</head>
+<body>
+
+    <div id="container"></div>
+
+	<script type="text/javascript">
+        
+
+		var stats, scene, renderer;
+		var camera, cameraControl, mesh;
+
+		if( !init() )	animate();
+
+		function init(){
+
+            renderer = new THREE.WebGLRenderer({
+					antialias		: true,
+					preserveDrawingBuffer	: true
+				});
+            renderer.setClearColor( 0xBBBBBB, 1 );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.getElementById('container').appendChild(renderer.domElement);
+
+			scene = new THREE.Scene();
+
+			camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
+			camera.position.set(0, 0, 5);
+			scene.add(camera);
+
+            var geometry = new THREE.BufferGeometry();
+
+            var vertices = new Float32Array( [
+                
+                -1.0, -1.0,  1.0,
+                1.0, -1.0,  1.0,
+                1.0,  1.0,  1.0,
+
+                1.0,  1.0,  1.0,
+                -1.0,  1.0,  1.0,
+                -1.0, -1.0,  1.0
+                
+            ] );
+
+            geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+            
+            var material = new THREE.ShaderMaterial( {
+
+            side : THREE.DoubleSide,
+                
+            uniforms: {
+
+            parentPosition: { value: new THREE.Vector3(0.0, 0.0, 0.0) },
+            rotation: { type: "f", value: 0.0 },
+            texture: { value: new THREE.TextureLoader().load( "assets/blob.png" ) }
+
+            },
+
+             vertexShader: document.getElementById( "vertexshader" ).textContent,
+             fragmentShader: document.getElementById( "fragmentshader" ).textContent,
+             alphaTest: 0.9
+
+            } );
+            
+            mesh = new THREE.Mesh( geometry, material );
+            scene.add(mesh);
+
+		}
+
+		function animate() {
+            
+            //mesh.material.uniforms.parentPosition.value.x += 0.01;
+            mesh.material.uniforms.rotation.value += 0.01;
+            
+			requestAnimationFrame( animate );
+            
+			render();
+
+		}
+
+
+		function render() {
+            
+			renderer.render( scene, camera );
+            
+		}
+        
+	</script>
+</body>
+</html>
