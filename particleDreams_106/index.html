@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="An interactive particle simulation for your mind, by Nop Jiarathanakul">
+    <title>A Particle Animals glTF [GL Transmission Format, .glb] v.106</title>
+    <style> 
+        
+        body { margin: 0; }
+        
+        #webgl-container {
+            
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            
+        }
+        
+        #webgl-container>canvas {
+            
+            float: left;
+            width: 100%;
+            height: 100%;
+            
+        }
+    
+    </style>
+    
+    <script src="https://unpkg.com/three@0.106.0/examples/js/libs/dat.gui.min.js"></script>
+    <script src="https://unpkg.com/three@0.106.0/examples/js/libs/stats.min.js"></script>
+    <script src="https://unpkg.com/three@0.106.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.106.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.106.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    
+</head>
+<body>
+    <div id="webgl-container" class="gradient-bg-cyan-black">
+        <canvas id="webgl-canvas"></canvas>
+    </div>
+</body>
+
+<script src="js/Utils.js"></script>
+<script src="js/shaders/SimShader.js"></script>
+<script src="js/shaders/SimInitShader.js"></script>
+<script src="js/shaders/ParticleShader.js"></script>
+<script src="js/shaders/SimDebugShader.js"></script>
+<script src="js/shaders/UVMapShader.js"></script>
+
+<script src="js/App.js"></script>
+
+</html>
